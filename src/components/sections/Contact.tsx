@@ -47,7 +47,7 @@ const Contact = () => {
             <div className="mt-10 space-y-5">
               {[
                 { i: Mail, l: "hello@saidamagicbox.eu" },
-                { i: Phone, l: "+43 1 555 0123" },
+                { i: Phone, l: "+43 676 9617723" },
                 { i: MapPin, l: "Innsbruck, Austria" },
               ].map(({ i: Icon, l }) => (
                 <div key={l} className="flex items-center gap-4">
