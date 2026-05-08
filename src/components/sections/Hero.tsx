@@ -53,7 +53,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-primary-glow/40 blur-3xl" />
             <div className="relative animate-float">
               <img src={heroImg} alt="SAIDA MagicBox premium tempered glass packaging" width={1536} height={1280}
-                className="w-full h-auto rounded-3xl shadow-elevated" />
+                className="w-full max-w-lg mx-auto h-auto rounded-3xl shadow-elevated" />
             </div>
             <div className="absolute -bottom-6 -left-4 sm:-left-10 glass rounded-2xl p-4 shadow-soft animate-float-slow max-w-[180px]">
               <div className="text-xs text-muted-foreground">Found in</div>
