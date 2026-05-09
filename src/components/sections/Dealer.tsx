@@ -49,9 +49,17 @@ const Dealer = () => {
             </div>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">{t("dealer_title")}</h2>
             <p className="mt-6 text-lg text-primary-foreground/70 max-w-lg">{t("dealer_sub")}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#dealer-form" className="inline-flex items-center gap-2 rounded-full bg-primary-foreground text-primary-deep px-5 py-2.5 text-sm font-medium hover:bg-primary-foreground/90 transition">
+                {t("dealer_cta_become")} <ArrowRight className="size-4" />
+              </a>
+              <a href="#dealer-form" className="inline-flex items-center gap-2 rounded-full glass-dark px-5 py-2.5 text-sm font-medium hover:bg-white/10 transition">
+                {t("dealer_cta_sample")}
+              </a>
+            </div>
           </div>
 
-          <form onSubmit={onSubmit} className="glass-dark rounded-3xl p-6 sm:p-10 space-y-4">
+          <form id="dealer-form" onSubmit={onSubmit} className="glass-dark rounded-3xl p-6 sm:p-10 space-y-4">
             <Input name="name" placeholder={t("f_name")} required maxLength={100} className="h-12 rounded-xl bg-white/5 border-white/10 text-primary-foreground placeholder:text-primary-foreground/50" />
             <div className="grid sm:grid-cols-2 gap-4">
               <Input name="email" type="email" placeholder={t("f_email")} required maxLength={255} className="h-12 rounded-xl bg-white/5 border-white/10 text-primary-foreground placeholder:text-primary-foreground/50" />
