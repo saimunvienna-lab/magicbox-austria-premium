@@ -1,38 +1,54 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-export type Lang = "en" | "de" | "fr" | "es";
+export type Lang = "en" | "de";
 
 type Dict = Record<string, string>;
+
+export const LANGS = [
+  { code: "en", label: "EN" },
+  { code: "de", label: "DE" },
+];
 
 const translations: Record<Lang, Dict> = {
   en: {
     nav_solution: "Solution",
     nav_technology: "Technology",
+    nav_how: "How it works",
     nav_gallery: "Gallery",
+    nav_blog: "Blog",
     nav_contact: "Contact",
     nav_dealer: "Become a Dealer",
+
     hero_eyebrow: "Designed in Austria · Engineered for Europe",
     hero_title: "One Box.",
     hero_title_2: "Every Phone.",
-    hero_sub: "The premium B2B inventory system for mobile phone shops. 2000+ smartphone models, 48+ brands, all organized through a single intelligent QR-code workflow.",
+    hero_sub: "The premium B2B inventory system for mobile phone shops. 2000+ smartphone models, 48+ brands, organized through one intelligent QR-code workflow.",
     hero_cta: "Request a Demo",
     hero_cta_2: "Watch the System",
+    trust_1: "Designed in Austria",
+    trust_2: "Engineered for Europe",
+    trust_3: "2000+ models",
+    trust_4: "48+ brands",
+
     stat_models: "Smartphone models",
     stat_brands: "Premium brands",
     stat_seconds: "Seconds to find any glass",
     stat_made: "Designed in Austria",
+
     problem_eyebrow: "The Problem",
     problem_title: "Phone shops lose hours every week sorting glass.",
-    problem_sub: "Hundreds of SKUs. Dusty drawers. Mislabelled boxes. Customers waiting. Sound familiar?",
+    problem_sub: "Hundreds of SKUs. Dusty drawers. Mislabelled boxes. Customers waiting.",
     p1_t: "Endless inventory", p1_d: "Stocking screen protectors for every model means thousands of micro-SKUs and zero clarity.",
-    p2_t: "Lost time", p2_d: "Staff spend 10–20 minutes per customer hunting for the right protector across messy drawers.",
+    p2_t: "Lost time", p2_d: "Staff spend 10–20 minutes per customer hunting for the right protector.",
     p3_t: "Tied-up capital", p3_d: "Overstock on slow movers, stockouts on hot models. Cash sits in cardboard.",
+
     sol_eyebrow: "The Solution",
     sol_title: "MagicBox replaces the chaos with one intelligent system.",
     sol_sub: "A precision-engineered drawer system, paired with a QR-driven product finder, that fits every modern smartphone in a footprint smaller than a tablet.",
     sol_1_t: "Compact footprint", sol_1_d: "One MagicBox holds inventory that previously took an entire wall of shelves.",
     sol_2_t: "Find any model in seconds", sol_2_d: "Scan, type or search — the QR system locates the exact protector instantly.",
     sol_3_t: "Restock with confidence", sol_3_d: "Built-in tracking shows what's selling, what's running low, what to reorder.",
+
     tech_eyebrow: "The Technology",
     tech_title: "Electroplated, fold-resistant glass.",
     tech_sub: "Each protector uses a 9H electroplated coating with anti-fingerprint, anti-glare, and oleophobic layers. The fold-resistant edge geometry survives drops, pockets, and daily abuse.",
@@ -41,30 +57,64 @@ const translations: Record<Lang, Dict> = {
     tech_3: "Oleophobic & anti-fingerprint",
     tech_4: "Fold-resistant edge tech",
     tech_5: "Crystal-clear 99.9% clarity",
-    tech_6: "Premium silicone adhesion",
-    qr_eyebrow: "The QR Workflow",
-    qr_title: "Scan. Find. Sell. In under 10 seconds.",
-    qr_step_1_t: "Scan the box",
-    qr_step_1_d: "Every MagicBox carries a unique QR. One scan opens your live inventory finder.",
-    qr_step_2_t: "Search the model",
-    qr_step_2_d: "Type any phone model. Our database covers 2000+ devices across 48+ brands.",
-    qr_step_3_t: "Pull the drawer",
-    qr_step_3_d: "The app tells you exactly which slot. Pull, sell, done — all in seconds.",
+    tech_6: "Anti-static ESD adhesive",
+
+    qr_eyebrow: "How it Works",
+    qr_title: "Scan. Find. Install. Under 10 seconds.",
+    qr_step_1_t: "Scan QR Code",
+    qr_step_1_d: "Every MagicBox carries a unique QR. One scan opens your live inventory finder in any browser.",
+    qr_step_2_t: "Find Drawer Code",
+    qr_step_2_d: "Search any phone model from 2000+ devices. The system returns the exact drawer and slot.",
+    qr_step_3_t: "Install Perfect Fit",
+    qr_step_3_d: "Pull the drawer, install the screen protector, complete the sale — all in seconds.",
+
+    sys_eyebrow: "The MagicBox System",
+    sys_title: "An entire shop's screen-protector inventory in one drawer system.",
+    sys_sub: "MagicBox is a complete B2B infrastructure: drawer hardware, QR software, and a constantly-updated model database — built for the realities of European mobile retail.",
+    sys_b1: "Universal compatibility across 48+ brands",
+    sys_b2: "Inventory reduced by up to 70% vs. traditional stocking",
+    sys_b3: "Live model database, monthly updates",
+    sys_b4: "Counter-ready industrial design",
+    sys_stat_drawers: "Drawers",
+    sys_stat_pieces: "Pieces",
+    sys_stat_brands: "Brands",
+    sys_stat_models: "Models",
+
     gallery_eyebrow: "Product Gallery",
     gallery_title: "Crafted to be seen.",
     gallery_sub: "Premium materials, considered details, retail-ready presentation.",
+
     austria_eyebrow: "Made in the Alps",
     austria_title: "Designed in Austria. Built for Europe.",
     austria_sub: "From the precision of Austrian engineering to a distribution network spanning the EU — MagicBox is built to the highest European standards for quality, sustainability and after-sales support.",
     austria_b1: "European warranty & support",
     austria_b2: "RoHS & REACH compliant",
     austria_b3: "Sustainable packaging",
-    benefits_eyebrow: "Why Shops Choose MagicBox",
+
+    benefits_eyebrow: "Why Dealers Love It",
     benefits_title: "Built for the realities of modern retail.",
-    b1_t: "+38% margin", b1_d: "Cut dead stock and accessory waste with smart restocking insights.",
-    b2_t: "10× faster service", b2_d: "Customers walk in, walk out — protected — in under 5 minutes.",
-    b3_t: "Zero training time", b3_d: "Anyone can operate MagicBox on day one. The QR does the thinking.",
-    b4_t: "Premium presentation", b4_d: "Look the part. MagicBox elevates your counter, your brand and your prices.",
+    b1_t: "Less inventory cost", b1_d: "Stop tying up capital in micro-SKUs. MagicBox replaces walls of stock with one drawer system.",
+    b2_t: "Less dead stock", b2_d: "Live data shows what moves and what doesn't — restock smarter, write off less.",
+    b3_t: "Faster service", b3_d: "Find any protector in seconds. Customers in and out — protected — in under 5 minutes.",
+    b4_t: "More organized shop", b4_d: "Every SKU has a place. Anyone on the team can find any model on day one.",
+    b5_t: "Higher profitability", b5_d: "Faster turnover, fewer write-offs, premium positioning — margins up to +38%.",
+    b6_t: "Better experience", b6_d: "Shoppers see a professional, premium operation — and pay premium prices.",
+
+    blog_eyebrow: "Insights",
+    blog_title: "Smarter mobile retail starts here.",
+    blog_sub: "B2B insights on inventory, screen protector technology and European mobile retail.",
+    blog_1_t: "Why screen-protector inventory is killing your margin",
+    blog_1_d: "A deep dive into the hidden costs of traditional accessory stocking.",
+    blog_1_tag: "Inventory",
+    blog_2_t: "Electroplated vs. standard tempered glass",
+    blog_2_d: "What the 9H electroplated coating actually does for durability and clarity.",
+    blog_2_tag: "Technology",
+    blog_3_t: "The European mobile retail playbook",
+    blog_3_d: "How leading EU phone shops are restructuring for 2026.",
+    blog_3_tag: "Retail",
+    blog_read: "Read article",
+    blog_soon: "Coming soon",
+
     test_eyebrow: "What Our Partners Say",
     test_title: "Trusted by hundreds of shops across Europe.",
     t1: "MagicBox cut our screen-protector handling time by 80%. The investment paid back in under 3 months.",
@@ -73,54 +123,122 @@ const translations: Record<Lang, Dict> = {
     t2_n: "Sofia G.", t2_r: "TechRepair Madrid",
     t3: "We added MagicBox to all 12 stores. Inventory accuracy went from chaos to 99%.",
     t3_n: "Lukas B.", t3_r: "PhonePoint, Munich",
+
     contact_eyebrow: "Get In Touch",
     contact_title: "Talk to our team.",
     contact_sub: "Tell us about your shop. We'll show you how MagicBox fits.",
     f_name: "Full name", f_email: "Work email", f_company: "Company", f_msg: "Your message", f_send: "Send message",
+
     dealer_eyebrow: "Partnership",
     dealer_title: "Become a MagicBox dealer.",
     dealer_sub: "Join our European distribution network. Wholesale pricing, marketing support, exclusive territories.",
+    dealer_cta_sample: "Request Sample Box",
+    dealer_cta_become: "Become a Dealer",
     f_country: "Country", f_volume: "Estimated monthly volume", f_send_dealer: "Apply now",
-    footer_tag: "Premium tempered glass inventory. Designed in Austria.",
+
+    footer_tag: "The premium B2B inventory system for mobile phone shops. Designed in Austria.",
     footer_rights: "All rights reserved.",
+    footer_legal: "Legal",
+    footer_company: "Company",
+    footer_product: "Product",
+    footer_follow: "Follow",
+
+    legal_impressum: "Impressum",
+    legal_privacy: "Privacy Policy",
+    legal_agb: "Terms (AGB)",
+    legal_widerruf: "Right of Withdrawal",
+    legal_cookies: "Cookie Policy",
+
+    cookie_title: "We value your privacy",
+    cookie_text: "We use cookies to enhance your browsing experience, analyze traffic and personalize content. You can choose your preferences below.",
+    cookie_accept: "Accept all",
+    cookie_reject: "Reject all",
+    cookie_prefs: "Preferences",
+    cookie_save: "Save preferences",
+    cookie_essential: "Essential",
+    cookie_analytics: "Analytics",
+    cookie_marketing: "Marketing",
+
     sent_title: "Message sent",
     sent_desc: "We'll be in touch within 24 hours.",
+    back_home: "Back to home",
   },
   de: {
-    nav_solution: "Lösung", nav_technology: "Technologie", nav_gallery: "Galerie", nav_contact: "Kontakt", nav_dealer: "Händler werden",
+    nav_solution: "Lösung", nav_technology: "Technologie", nav_how: "So funktioniert's",
+    nav_gallery: "Galerie", nav_blog: "Blog", nav_contact: "Kontakt", nav_dealer: "Händler werden",
+
     hero_eyebrow: "Entwickelt in Österreich · Gemacht für Europa",
     hero_title: "Eine Box.", hero_title_2: "Jedes Handy.",
     hero_sub: "Das Premium-B2B-Lagersystem für Handyshops. 2000+ Smartphone-Modelle, 48+ Marken — organisiert in einem intelligenten QR-Workflow.",
     hero_cta: "Demo anfragen", hero_cta_2: "System ansehen",
+    trust_1: "Designed in Austria", trust_2: "Gemacht für Europa", trust_3: "2000+ Modelle", trust_4: "48+ Marken",
+
     stat_models: "Smartphone-Modelle", stat_brands: "Premium-Marken", stat_seconds: "Sekunden bis zum Glas", stat_made: "Made in Austria",
+
     problem_eyebrow: "Das Problem", problem_title: "Handyshops verlieren Stunden mit Glas-Sortierung.",
     problem_sub: "Hunderte SKUs. Verstaubte Schubladen. Falsche Etiketten. Wartende Kunden.",
     p1_t: "Endloses Lager", p1_d: "Tausende Mikro-SKUs für jedes Modell — null Übersicht.",
     p2_t: "Verlorene Zeit", p2_d: "10–20 Minuten pro Kunde für die Suche.",
     p3_t: "Gebundenes Kapital", p3_d: "Überbestand bei Slow-Movern, Out-of-Stock bei Top-Modellen.",
+
     sol_eyebrow: "Die Lösung", sol_title: "MagicBox ersetzt das Chaos durch ein intelligentes System.",
-    sol_sub: "Ein präzises Schubladensystem mit QR-Produktfinder — kleiner als ein Tablet, größer als jedes bisherige Lager.",
+    sol_sub: "Ein präzises Schubladensystem mit QR-Produktfinder — kleiner als ein Tablet, ersetzt eine ganze Lagerwand.",
     sol_1_t: "Kompaktes Format", sol_1_d: "Eine MagicBox ersetzt eine ganze Regalwand.",
     sol_2_t: "Modell in Sekunden finden", sol_2_d: "Scannen, tippen, suchen — der Finder liefert sofort.",
     sol_3_t: "Sicher nachbestellen", sol_3_d: "Live-Tracking zeigt Bestseller, Engpässe und Nachschubbedarf.",
+
     tech_eyebrow: "Die Technologie", tech_title: "Elektroplattiertes, falt-resistentes Glas.",
     tech_sub: "9H-Beschichtung mit Anti-Fingerprint, Anti-Glare und Oleophob-Layer. Falt-resistente Kanten überleben Stürze und Hosentaschen.",
     tech_1: "9H elektroplattiert", tech_2: "0,33mm Präzision", tech_3: "Oleophob & fingerprint-frei",
-    tech_4: "Falt-resistente Kanten", tech_5: "99,9% Klarheit", tech_6: "Premium-Silikon-Haftung",
-    qr_eyebrow: "Der QR-Workflow", qr_title: "Scannen. Finden. Verkaufen. In unter 10 Sekunden.",
-    qr_step_1_t: "Box scannen", qr_step_1_d: "Jede MagicBox hat einen eindeutigen QR. Ein Scan öffnet den Inventar-Finder.",
-    qr_step_2_t: "Modell suchen", qr_step_2_d: "Modell tippen — 2000+ Geräte über 48+ Marken sind hinterlegt.",
-    qr_step_3_t: "Schublade ziehen", qr_step_3_d: "Die App zeigt das exakte Fach. Ziehen, verkaufen, fertig.",
-    gallery_eyebrow: "Produkt-Galerie", gallery_title: "Geschaffen, um gesehen zu werden.",
+    tech_4: "Falt-resistente Kanten", tech_5: "99,9% Klarheit", tech_6: "Antistatischer ESD-Kleber",
+
+    qr_eyebrow: "So funktioniert's", qr_title: "Scannen. Finden. Anbringen. Unter 10 Sekunden.",
+    qr_step_1_t: "QR-Code scannen", qr_step_1_d: "Jede MagicBox hat einen eindeutigen QR. Ein Scan öffnet den Inventar-Finder im Browser.",
+    qr_step_2_t: "Schubladen-Code finden", qr_step_2_d: "Modell suchen — 2000+ Geräte hinterlegt. Das System nennt die exakte Schublade.",
+    qr_step_3_t: "Perfekt anbringen", qr_step_3_d: "Schublade ziehen, Schutzglas anbringen, verkaufen — in Sekunden.",
+
+    sys_eyebrow: "Das MagicBox-System",
+    sys_title: "Ein ganzes Shop-Lager in einem Schubladensystem.",
+    sys_sub: "MagicBox ist eine komplette B2B-Infrastruktur: Schubladen-Hardware, QR-Software und eine ständig aktualisierte Modell-Datenbank — gebaut für den europäischen Handy-Handel.",
+    sys_b1: "Universelle Kompatibilität über 48+ Marken",
+    sys_b2: "Bis zu 70% weniger Lagerbestand",
+    sys_b3: "Live-Datenbank, monatliche Updates",
+    sys_b4: "Counter-Ready Industriedesign",
+    sys_stat_drawers: "Schubladen",
+    sys_stat_pieces: "Stück",
+    sys_stat_brands: "Marken",
+    sys_stat_models: "Modelle",
+
+    gallery_eyebrow: "Galerie", gallery_title: "Geschaffen, um gesehen zu werden.",
     gallery_sub: "Premium-Materialien, durchdachte Details, retail-ready.",
+
     austria_eyebrow: "Aus den Alpen", austria_title: "Designed in Austria. Built for Europe.",
     austria_sub: "Österreichische Präzision trifft auf ein EU-weites Distributionsnetz. Höchste europäische Standards für Qualität, Nachhaltigkeit und Service.",
     austria_b1: "EU-Garantie & Support", austria_b2: "RoHS & REACH konform", austria_b3: "Nachhaltige Verpackung",
-    benefits_eyebrow: "Warum Shops MagicBox wählen", benefits_title: "Gebaut für den modernen Handel.",
-    b1_t: "+38% Marge", b1_d: "Weniger Totstock dank smarter Nachschub-Insights.",
-    b2_t: "10× schneller", b2_d: "Kunden rein, geschützt, raus — in unter 5 Minuten.",
-    b3_t: "Null Schulungszeit", b3_d: "Jeder bedient MagicBox vom ersten Tag.",
-    b4_t: "Premium-Auftritt", b4_d: "Werten Sie Ihren Counter, Ihre Marke und Ihre Preise auf.",
+
+    benefits_eyebrow: "Warum Händler MagicBox lieben", benefits_title: "Gebaut für den modernen Handel.",
+    b1_t: "Weniger Lagerkosten", b1_d: "Kein gebundenes Kapital mehr in Mikro-SKUs. Eine Box ersetzt eine ganze Lagerwand.",
+    b2_t: "Weniger Totstock", b2_d: "Live-Daten zeigen, was läuft. Smarter nachbestellen, weniger abschreiben.",
+    b3_t: "Schnellerer Service", b3_d: "Jedes Schutzglas in Sekunden. Kunden in unter 5 Minuten geschützt.",
+    b4_t: "Organisierter Shop", b4_d: "Jede SKU hat ihren Platz. Jeder im Team findet jedes Modell ab Tag 1.",
+    b5_t: "Höhere Profitabilität", b5_d: "Schnellerer Umschlag, weniger Verlust, Premium-Positionierung — bis zu +38% Marge.",
+    b6_t: "Bessere Erfahrung", b6_d: "Kunden sehen einen Premium-Auftritt — und zahlen Premium-Preise.",
+
+    blog_eyebrow: "Insights",
+    blog_title: "Smarter Mobilfunk-Handel beginnt hier.",
+    blog_sub: "B2B-Insights zu Lager, Schutzglas-Technologie und europäischem Mobilfunk-Handel.",
+    blog_1_t: "Warum Schutzglas-Lager Ihre Marge frisst",
+    blog_1_d: "Ein tiefer Blick in die versteckten Kosten klassischer Zubehör-Lagerung.",
+    blog_1_tag: "Lager",
+    blog_2_t: "Elektroplattiert vs. Standard-Panzerglas",
+    blog_2_d: "Was die 9H-Beschichtung wirklich für Haltbarkeit und Klarheit leistet.",
+    blog_2_tag: "Technologie",
+    blog_3_t: "Das europäische Mobilfunk-Retail Playbook",
+    blog_3_d: "Wie führende EU-Handyshops sich für 2026 neu aufstellen.",
+    blog_3_tag: "Retail",
+    blog_read: "Artikel lesen",
+    blog_soon: "Bald verfügbar",
+
     test_eyebrow: "Was Partner sagen", test_title: "Vertraut von hunderten Shops in Europa.",
     t1: "MagicBox hat unsere Glas-Bearbeitungszeit um 80% gesenkt. ROI in unter 3 Monaten.",
     t1_n: "Markus W.", t1_r: "Mobile World, Wien",
@@ -128,130 +246,56 @@ const translations: Record<Lang, Dict> = {
     t2_n: "Sofia G.", t2_r: "TechRepair Madrid",
     t3: "12 Filialen ausgestattet. Bestandsgenauigkeit von Chaos auf 99%.",
     t3_n: "Lukas B.", t3_r: "PhonePoint, München",
+
     contact_eyebrow: "Kontakt", contact_title: "Sprechen Sie mit unserem Team.",
     contact_sub: "Erzählen Sie uns von Ihrem Shop. Wir zeigen Ihnen, wie MagicBox passt.",
     f_name: "Vollständiger Name", f_email: "Geschäfts-E-Mail", f_company: "Firma", f_msg: "Ihre Nachricht", f_send: "Nachricht senden",
+
     dealer_eyebrow: "Partnerschaft", dealer_title: "Werden Sie MagicBox-Händler.",
     dealer_sub: "Großhandelspreise, Marketing-Support, exklusive Gebiete.",
+    dealer_cta_sample: "Sample Box anfragen",
+    dealer_cta_become: "Händler werden",
     f_country: "Land", f_volume: "Geschätztes Monatsvolumen", f_send_dealer: "Jetzt bewerben",
-    footer_tag: "Premium-Glas-Lagersystem. Designed in Austria.", footer_rights: "Alle Rechte vorbehalten.",
+
+    footer_tag: "Das Premium-B2B-Lagersystem für Handyshops. Designed in Austria.",
+    footer_rights: "Alle Rechte vorbehalten.",
+    footer_legal: "Rechtliches", footer_company: "Unternehmen", footer_product: "Produkt", footer_follow: "Folgen",
+
+    legal_impressum: "Impressum", legal_privacy: "Datenschutz", legal_agb: "AGB",
+    legal_widerruf: "Widerrufsrecht", legal_cookies: "Cookie-Richtlinie",
+
+    cookie_title: "Wir respektieren Ihre Privatsphäre",
+    cookie_text: "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern, Traffic zu analysieren und Inhalte zu personalisieren. Wählen Sie unten Ihre Präferenzen.",
+    cookie_accept: "Alle akzeptieren", cookie_reject: "Alle ablehnen",
+    cookie_prefs: "Einstellungen", cookie_save: "Speichern",
+    cookie_essential: "Notwendig", cookie_analytics: "Analyse", cookie_marketing: "Marketing",
+
     sent_title: "Nachricht gesendet", sent_desc: "Wir melden uns innerhalb von 24 Stunden.",
-  },
-  fr: {
-    nav_solution: "Solution", nav_technology: "Technologie", nav_gallery: "Galerie", nav_contact: "Contact", nav_dealer: "Devenir revendeur",
-    hero_eyebrow: "Conçu en Autriche · Pensé pour l'Europe",
-    hero_title: "Une boîte.", hero_title_2: "Tous les téléphones.",
-    hero_sub: "Le système d'inventaire B2B premium pour les boutiques mobiles. 2000+ modèles, 48+ marques, un seul workflow QR intelligent.",
-    hero_cta: "Demander une démo", hero_cta_2: "Voir le système",
-    stat_models: "Modèles", stat_brands: "Marques premium", stat_seconds: "Secondes pour trouver", stat_made: "Conçu en Autriche",
-    problem_eyebrow: "Le problème", problem_title: "Les boutiques perdent des heures à trier le verre.",
-    problem_sub: "Des centaines de SKU. Des tiroirs en désordre. Des étiquettes erronées.",
-    p1_t: "Inventaire infini", p1_d: "Des milliers de micro-SKU, aucune visibilité.",
-    p2_t: "Temps perdu", p2_d: "10 à 20 minutes par client à chercher.",
-    p3_t: "Capital bloqué", p3_d: "Trop de stock lent, ruptures sur les bestsellers.",
-    sol_eyebrow: "La solution", sol_title: "MagicBox remplace le chaos par un système intelligent.",
-    sol_sub: "Un système de tiroirs précis associé à un finder QR — tient sur un comptoir, gère votre boutique entière.",
-    sol_1_t: "Encombrement minimal", sol_1_d: "Une MagicBox remplace tout un mur d'étagères.",
-    sol_2_t: "Trouvez tout en quelques secondes", sol_2_d: "Scannez, tapez, cherchez — résultat instantané.",
-    sol_3_t: "Réapprovisionnez en confiance", sol_3_d: "Suivi intégré de ce qui se vend, ce qui manque.",
-    tech_eyebrow: "Technologie", tech_title: "Verre électroplaqué, anti-pliure.",
-    tech_sub: "Revêtement 9H électroplaqué, anti-empreintes, anti-reflet. Les bords anti-pliure résistent aux chutes.",
-    tech_1: "Surface 9H électroplaquée", tech_2: "Épaisseur 0,33mm", tech_3: "Oléophobe & anti-empreintes",
-    tech_4: "Bords anti-pliure", tech_5: "Clarté 99,9%", tech_6: "Adhésion silicone premium",
-    qr_eyebrow: "Workflow QR", qr_title: "Scanner. Trouver. Vendre. En moins de 10 secondes.",
-    qr_step_1_t: "Scannez la boîte", qr_step_1_d: "Chaque MagicBox a un QR unique. Un scan ouvre le finder.",
-    qr_step_2_t: "Cherchez le modèle", qr_step_2_d: "Tapez le modèle — 2000+ appareils, 48+ marques.",
-    qr_step_3_t: "Ouvrez le tiroir", qr_step_3_d: "L'app indique l'emplacement exact. Tirez, vendez, terminé.",
-    gallery_eyebrow: "Galerie produit", gallery_title: "Conçu pour être vu.",
-    gallery_sub: "Matériaux premium, détails soignés, prêt pour la vente.",
-    austria_eyebrow: "Né dans les Alpes", austria_title: "Conçu en Autriche. Pour l'Europe.",
-    austria_sub: "L'ingénierie autrichienne rencontre un réseau de distribution paneuropéen.",
-    austria_b1: "Garantie & support EU", austria_b2: "Conforme RoHS & REACH", austria_b3: "Emballage durable",
-    benefits_eyebrow: "Pourquoi MagicBox", benefits_title: "Conçu pour le commerce moderne.",
-    b1_t: "+38% de marge", b1_d: "Moins de stock mort grâce au réapprovisionnement intelligent.",
-    b2_t: "10× plus rapide", b2_d: "Vos clients sortent protégés en moins de 5 minutes.",
-    b3_t: "Zéro formation", b3_d: "Tout le monde maîtrise MagicBox dès le premier jour.",
-    b4_t: "Présentation premium", b4_d: "Élevez votre comptoir, votre marque, vos prix.",
-    test_eyebrow: "Témoignages", test_title: "Plébiscité par des centaines de boutiques.",
-    t1: "MagicBox a réduit notre temps de gestion verre de 80%. Rentabilisé en 3 mois.",
-    t1_n: "Markus W.", t1_r: "Mobile World, Vienne",
-    t2: "Enfin un système conçu par des gens qui comprennent une boutique mobile.",
-    t2_n: "Sofia G.", t2_r: "TechRepair Madrid",
-    t3: "Déployé dans nos 12 magasins. Précision d'inventaire à 99%.",
-    t3_n: "Lukas B.", t3_r: "PhonePoint, Munich",
-    contact_eyebrow: "Contact", contact_title: "Parlez à notre équipe.",
-    contact_sub: "Décrivez-nous votre boutique. Nous vous montrons comment MagicBox s'intègre.",
-    f_name: "Nom complet", f_email: "Email pro", f_company: "Société", f_msg: "Votre message", f_send: "Envoyer",
-    dealer_eyebrow: "Partenariat", dealer_title: "Devenez revendeur MagicBox.",
-    dealer_sub: "Tarifs grossistes, support marketing, territoires exclusifs.",
-    f_country: "Pays", f_volume: "Volume mensuel estimé", f_send_dealer: "Postuler",
-    footer_tag: "Système d'inventaire verre premium. Conçu en Autriche.", footer_rights: "Tous droits réservés.",
-    sent_title: "Message envoyé", sent_desc: "Nous revenons vers vous sous 24h.",
-  },
-  es: {
-    nav_solution: "Solución", nav_technology: "Tecnología", nav_gallery: "Galería", nav_contact: "Contacto", nav_dealer: "Ser distribuidor",
-    hero_eyebrow: "Diseñado en Austria · Pensado para Europa",
-    hero_title: "Una caja.", hero_title_2: "Todos los móviles.",
-    hero_sub: "El sistema de inventario B2B premium para tiendas de móviles. 2000+ modelos, 48+ marcas, un único flujo QR inteligente.",
-    hero_cta: "Solicitar demo", hero_cta_2: "Ver el sistema",
-    stat_models: "Modelos", stat_brands: "Marcas premium", stat_seconds: "Segundos para encontrar", stat_made: "Diseñado en Austria",
-    problem_eyebrow: "El problema", problem_title: "Las tiendas pierden horas ordenando vidrios.",
-    problem_sub: "Cientos de SKU. Cajones desordenados. Etiquetas erróneas.",
-    p1_t: "Inventario interminable", p1_d: "Miles de micro-SKU, cero claridad.",
-    p2_t: "Tiempo perdido", p2_d: "10-20 minutos por cliente buscando.",
-    p3_t: "Capital atado", p3_d: "Exceso en lentos, rotura en éxitos.",
-    sol_eyebrow: "La solución", sol_title: "MagicBox sustituye el caos por un sistema inteligente.",
-    sol_sub: "Sistema de cajones de precisión con buscador QR — cabe en un mostrador, gestiona toda tu tienda.",
-    sol_1_t: "Mínimo espacio", sol_1_d: "Una MagicBox reemplaza una pared de estanterías.",
-    sol_2_t: "Encuentra en segundos", sol_2_d: "Escanea, escribe, busca — resultado instantáneo.",
-    sol_3_t: "Reabastece con confianza", sol_3_d: "Seguimiento de ventas, stock bajo y reposición.",
-    tech_eyebrow: "Tecnología", tech_title: "Vidrio electrochapado, anti-pliegue.",
-    tech_sub: "Recubrimiento 9H electrochapado, anti-huellas, anti-reflejos. Los bordes anti-pliegue resisten caídas.",
-    tech_1: "Superficie 9H", tech_2: "Grosor 0,33mm", tech_3: "Oleofóbico y anti-huellas",
-    tech_4: "Bordes anti-pliegue", tech_5: "Claridad 99,9%", tech_6: "Adhesión silicona premium",
-    qr_eyebrow: "Flujo QR", qr_title: "Escanear. Encontrar. Vender. En menos de 10 segundos.",
-    qr_step_1_t: "Escanea la caja", qr_step_1_d: "Cada MagicBox tiene un QR único. Un escaneo abre el buscador.",
-    qr_step_2_t: "Busca el modelo", qr_step_2_d: "Escribe el modelo — 2000+ dispositivos, 48+ marcas.",
-    qr_step_3_t: "Abre el cajón", qr_step_3_d: "La app indica el hueco exacto. Saca, vende, listo.",
-    gallery_eyebrow: "Galería", gallery_title: "Hecho para verse.",
-    gallery_sub: "Materiales premium, detalles cuidados, listo para el retail.",
-    austria_eyebrow: "De los Alpes", austria_title: "Diseñado en Austria. Para Europa.",
-    austria_sub: "Ingeniería austríaca y red de distribución paneuropea con los más altos estándares.",
-    austria_b1: "Garantía & soporte EU", austria_b2: "Cumple RoHS & REACH", austria_b3: "Embalaje sostenible",
-    benefits_eyebrow: "Por qué MagicBox", benefits_title: "Hecho para el comercio moderno.",
-    b1_t: "+38% margen", b1_d: "Menos stock muerto con reposición inteligente.",
-    b2_t: "10× más rápido", b2_d: "Clientes salen protegidos en menos de 5 minutos.",
-    b3_t: "Cero formación", b3_d: "Cualquiera maneja MagicBox desde el día uno.",
-    b4_t: "Imagen premium", b4_d: "Eleva tu mostrador, tu marca y tus precios.",
-    test_eyebrow: "Testimonios", test_title: "Confianza de cientos de tiendas en Europa.",
-    t1: "MagicBox redujo el tiempo de gestión de vidrios un 80%. Recuperado en 3 meses.",
-    t1_n: "Markus W.", t1_r: "Mobile World, Viena",
-    t2: "Por fin un sistema diseñado por gente que entiende una tienda móvil.",
-    t2_n: "Sofia G.", t2_r: "TechRepair Madrid",
-    t3: "Implementado en 12 tiendas. Precisión de inventario al 99%.",
-    t3_n: "Lukas B.", t3_r: "PhonePoint, Múnich",
-    contact_eyebrow: "Contacto", contact_title: "Habla con nuestro equipo.",
-    contact_sub: "Cuéntanos sobre tu tienda. Te mostramos cómo encaja MagicBox.",
-    f_name: "Nombre completo", f_email: "Email profesional", f_company: "Empresa", f_msg: "Tu mensaje", f_send: "Enviar mensaje",
-    dealer_eyebrow: "Partnership", dealer_title: "Conviértete en distribuidor MagicBox.",
-    dealer_sub: "Precios mayoristas, soporte marketing, territorios exclusivos.",
-    f_country: "País", f_volume: "Volumen mensual estimado", f_send_dealer: "Aplicar ahora",
-    footer_tag: "Sistema de inventario premium. Diseñado en Austria.", footer_rights: "Todos los derechos reservados.",
-    sent_title: "Mensaje enviado", sent_desc: "Te contactaremos en menos de 24h.",
+    back_home: "Zurück zur Startseite",
   },
 };
 
-const I18nContext = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string }>({
-  lang: "en", setLang: () => {}, t: (k) => k,
-});
+type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
+const I18nContext = createContext<Ctx | null>(null);
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Lang>("en");
-  const t = (key: string) => translations[lang][key] ?? translations.en[key] ?? key;
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "en";
+    const saved = localStorage.getItem("saida_lang") as Lang | null;
+    if (saved === "en" || saved === "de") return saved;
+    return navigator.language?.toLowerCase().startsWith("de") ? "de" : "en";
+  });
+  useEffect(() => {
+    if (typeof document !== "undefined") document.documentElement.lang = lang;
+    localStorage.setItem("saida_lang", lang);
+  }, [lang]);
+  const setLang = (l: Lang) => setLangState(l);
+  const t = (k: string) => translations[lang][k] ?? translations.en[k] ?? k;
   return <I18nContext.Provider value={{ lang, setLang, t }}>{children}</I18nContext.Provider>;
 };
 
-export const useI18n = () => useContext(I18nContext);
-export const LANGS: { code: Lang; label: string }[] = [
-  { code: "en", label: "EN" }, { code: "de", label: "DE" }, { code: "fr", label: "FR" }, { code: "es", label: "ES" },
-];
+export const useI18n = () => {
+  const ctx = useContext(I18nContext);
+  if (!ctx) throw new Error("useI18n must be used within I18nProvider");
+  return ctx;
+};

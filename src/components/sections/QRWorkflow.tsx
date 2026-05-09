@@ -10,7 +10,7 @@ const QRWorkflow = () => {
     { n: "03", icon: PackageOpen, t: t("qr_step_3_t"), d: t("qr_step_3_d") },
   ];
   return (
-    <section id="qr" className="py-24 sm:py-32">
+    <section id="how" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">{t("qr_eyebrow")}</div>
