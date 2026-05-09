@@ -4,7 +4,7 @@ const DB = [{"b":"Apple","m":"iPhone 11 Pro","k":"K01"},{"b":"Apple","m":"iPhone
 
 type Model = { b: string; m: string; k: string };
 
-const BRANDS = ["Apple","Samsung","Xiaomi","Redmi","Realme","Oppo","Vivo","OnePlus","Motorola","Huawei","Honor","Google","Nokia","Nothing Phone","Infinix","Tecno"];
+const BRANDS = ["Apple","Samsung","Google","Xiaomi","Redmi","Honor","Oppo","Vivo","OnePlus","Motorola","Huawei","Nokia","Nothing Phone","Realme","Infinix","Tecno"];
 
 const STEPS = [
   { num: "1", label: "Schritt 1 / Step 1", heading: "QR-Code scannen", desc: "Jede MagicBox hat einen eindeutigen QR. Ein Scan öffnet sofort den Inventar-Finder." },
