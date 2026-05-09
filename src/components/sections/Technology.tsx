@@ -1,6 +1,6 @@
 import { Shield, Sparkles, Smartphone, Zap, Eye, Droplet } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import techImg from "@/assets/glass-tech.jpg";
+import techImg from "@/assets/saida-glass-flex.jpg";
 
 const Technology = () => {
   const { t } = useI18n();
@@ -35,7 +35,7 @@ const Technology = () => {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-primary-glow/30 blur-3xl rounded-full" />
-            <img src={techImg} alt="Electroplated tempered glass with iridescent reflection" width={1280} height={1280} loading="lazy"
+            <img src={techImg} alt="Electroplated tempered glass — fold-resistant" width={1280} height={720} loading="lazy"
               className="relative rounded-3xl w-full animate-float" />
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { Box, Search, TrendingUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import shopImg from "@/assets/shop-display.jpg";
+import shopImg from "@/assets/saida-system.jpg";
 
 const Solution = () => {
   const { t } = useI18n();
@@ -14,8 +14,8 @@ const Solution = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1 relative">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-primary-glow/20 blur-3xl rounded-full" />
-            <img src={shopImg} alt="MagicBox in a modern phone shop" width={1280} height={1024} loading="lazy"
+            <div className="absolute -inset-6 bg-gradient-to-tr from-primary/20 to-primary-glow/20 blur-3xl rounded-full" />
+            <img src={shopImg} alt="MagicBox drawer system with packaging" width={1280} height={720} loading="lazy"
               className="relative rounded-3xl shadow-elevated w-full" />
           </div>
           <div className="order-1 lg:order-2">
