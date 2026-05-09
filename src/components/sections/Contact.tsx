@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { z } from "zod";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useI18n } from "@/lib/i18n";
 
-// ─── Replace these with your EmailJS credentials ───────────────────────────
-const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";   // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";  // e.g. "template_xyz456"
-const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";   // e.g. "user_abc123xyz"
-// ───────────────────────────────────────────────────────────────────────────
+const FORMSPREE_URL = "https://formspree.io/f/mzdokerz";
 
 const schema = z.object({
   name:    z.string().trim().min(1).max(100),
@@ -41,25 +36,25 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name:  parsed.data.name,
-          from_email: parsed.data.email,
-          company:    parsed.data.company ?? "—",
-          message:    parsed.data.message,
-          to_email:   "office@saidamagicbox.com",
-        },
-        EMAILJS_PUBLIC_KEY
-      );
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          name:    parsed.data.name,
+          email:   parsed.data.email,
+          company: parsed.data.company ?? "—",
+          message: parsed.data.message,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
 
       (e.target as HTMLFormElement).reset();
       toast({ title: t("sent_title"), description: t("sent_desc") });
     } catch {
       toast({
         title: "Something went wrong",
-        description: "Please try again or email us directly.",
+        description: "Please try again or email us directly at office@saidamagicbox.com",
         variant: "destructive",
       });
     } finally {
