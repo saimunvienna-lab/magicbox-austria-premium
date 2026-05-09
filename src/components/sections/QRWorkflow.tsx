@@ -165,8 +165,8 @@ function hl(text: string, q: string) {
 }
 
 const QRWorkflow = () => {
-  const { locale } = useI18n();
-  const de = locale === "de";
+  const { lang } = useI18n();
+const de = lang === "de";
   const STEPS = steps(de);
 
   const [tab, setTab]           = useState<"how" | "find">("how");
