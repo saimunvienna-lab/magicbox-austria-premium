@@ -5,13 +5,17 @@ import Problem from "@/components/sections/Problem";
 import Solution from "@/components/sections/Solution";
 import Technology from "@/components/sections/Technology";
 import QRWorkflow from "@/components/sections/QRWorkflow";
+import MagicBoxSystem from "@/components/sections/MagicBoxSystem";
 import Gallery from "@/components/sections/Gallery";
 import Austria from "@/components/sections/Austria";
 import Benefits from "@/components/sections/Benefits";
+import Blog from "@/components/sections/Blog";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Dealer from "@/components/sections/Dealer";
 import Footer from "@/components/sections/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import CookieBanner from "@/components/CookieBanner";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -21,6 +25,7 @@ const jsonLd = {
   brand: { "@type": "Brand", name: "SAIDA" },
   countryOfOrigin: "AT",
   category: "B2B Retail Inventory System",
+  manufacturer: { "@type": "Organization", name: "SAIDA MagicBox", address: { "@type": "PostalAddress", addressLocality: "Innsbruck", addressCountry: "AT" } },
 };
 
 const Index = () => (
@@ -34,13 +39,17 @@ const Index = () => (
       <Solution />
       <Technology />
       <QRWorkflow />
+      <MagicBoxSystem />
       <Gallery />
       <Austria />
       <Benefits />
+      <Blog />
       <Testimonials />
       <Contact />
       <Dealer />
       <Footer />
+      <WhatsAppButton />
+      <CookieBanner />
     </main>
   </I18nProvider>
 );
