@@ -8,6 +8,8 @@ import Legal from "./pages/Legal.tsx";
 import BlogIndex from "./pages/BlogIndex.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Order from "./components/sections/Order.tsx";
+import Admin from "./pages/Admin.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,7 @@ const App = () => (
           <Route path="/agb" element={<Legal slug="agb" />} />
           <Route path="/widerruf" element={<Legal slug="widerruf" />} />
           <Route path="/cookies" element={<Legal slug="cookies" />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
