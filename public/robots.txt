@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saidamagicbox.eu/sitemap.xml
+Sitemap: https://saidamagicbox.com/sitemap.xml
