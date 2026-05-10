@@ -1,4 +1,6 @@
 Options -MultiViews
 RewriteEngine On
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.html [QL]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
