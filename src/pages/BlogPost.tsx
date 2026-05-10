@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Clock, Linkedin, Twitter, Facebook, Link2 } from "lucide-react";
-import { I18nProvider } from "@/lib/i18n";
+import { I18nProvider, useI18n } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -9,7 +9,10 @@ import { Button } from "@/components/ui/button";
 import { getPost, getRelated } from "@/lib/blog-data";
 import { toast } from "@/hooks/use-toast";
 
-const formatDate = (d: string) => new Date(d).toLocaleDateString("de-AT", { day: "2-digit", month: "long", year: "numeric" });
+const formatDate = (d: string, locale: string) =>
+  new Date(d).toLocaleDateString(locale === "de" ? "de-AT" : "en-GB", {
+    day: "2-digit", month: "long", year: "numeric",
+  });
 
 const Progress = () => {
   const [w, setW] = useState(0);
@@ -30,26 +33,29 @@ const Progress = () => {
   );
 };
 
-const Share = ({ title }: { title: string }) => {
+const Share = ({ title, de }: { title: string; de: boolean }) => {
   const url = typeof window !== "undefined" ? window.location.href : "";
   const enc = encodeURIComponent;
   const links = [
     { label: "LinkedIn", icon: Linkedin, href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}` },
-    { label: "Twitter", icon: Twitter, href: `https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}` },
+    { label: "Twitter",  icon: Twitter,  href: `https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}` },
     { label: "Facebook", icon: Facebook, href: `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}` },
   ];
   const copy = async () => {
-    try { await navigator.clipboard.writeText(url); toast({ title: "Link kopiert" }); } catch { /* ignore */ }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast({ title: de ? "Link kopiert" : "Link copied" });
+    } catch { /* ignore */ }
   };
   return (
     <div className="flex items-center gap-2">
       {links.map((l) => (
-        <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`Auf ${l.label} teilen`}
+        <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${l.label}`}
           className="size-10 rounded-full border bg-card grid place-items-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
           <l.icon className="size-4" />
         </a>
       ))}
-      <button onClick={copy} aria-label="Link kopieren"
+      <button onClick={copy} aria-label={de ? "Link kopieren" : "Copy link"}
         className="size-10 rounded-full border bg-card grid place-items-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
         <Link2 className="size-4" />
       </button>
@@ -59,35 +65,56 @@ const Share = ({ title }: { title: string }) => {
 
 const Inner = () => {
   const { slug = "" } = useParams();
-  const post = getPost(slug);
+  const { lang }      = useI18n();
+  const de            = lang === "de";
+  const post          = getPost(slug);
   if (!post) return <Navigate to="/blog" replace />;
   const related = getRelated(post.slug);
 
+  /* bilingual helpers */
+  const title    = de ? post.title    : post.title_en;
+  const excerpt  = de ? post.excerpt  : post.excerpt_en;
+  const category = de ? post.category : post.category_en;
+  const body     = de ? post.body     : post.body_en;
+  const toc      = de ? post.toc      : post.toc_en;
+  const faq      = de ? post.faq      : post.faq_en;
+
+  const relTitle = (p: typeof post) => de ? p.title : p.title_en;
+  const relCat   = (p: typeof post) => de ? p.category : p.category_en;
+
+  /* JSON-LD */
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
+    headline: title,
+    description: excerpt,
     image: post.image,
     datePublished: post.date,
-    inLanguage: "de-AT",
-    author: { "@type": "Organization", name: "SAIDA MagicBox" },
+    inLanguage: de ? "de-AT" : "en-GB",
+    author:    { "@type": "Organization", name: "SAIDA MagicBox" },
     publisher: { "@type": "Organization", name: "SAIDA MagicBox" },
     keywords: post.keywords.join(", "),
   };
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: post.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
   };
 
   useEffect(() => {
-    document.title = `${post.title} — SAIDA MagicBox`;
+    document.title = `${title} — SAIDA MagicBox`;
     const meta = document.querySelector('meta[name="description"]') || (() => {
-      const m = document.createElement("meta"); m.setAttribute("name", "description"); document.head.appendChild(m); return m;
+      const m = document.createElement("meta");
+      m.setAttribute("name", "description");
+      document.head.appendChild(m);
+      return m;
     })();
-    meta.setAttribute("content", post.excerpt);
-  }, [post]);
+    meta.setAttribute("content", excerpt);
+  }, [title, excerpt]);
 
   return (
     <main className="bg-background min-h-screen">
@@ -105,38 +132,58 @@ const Inner = () => {
             <span className="mx-2">/</span>
             <Link to="/blog" className="hover:text-foreground">Blog</Link>
             <span className="mx-2">/</span>
-            <span className="text-foreground line-clamp-1 inline-block max-w-[60%] align-bottom">{post.title}</span>
+            <span className="text-foreground line-clamp-1 inline-block max-w-[60%] align-bottom">{title}</span>
           </nav>
           <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-6">
-            <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">{post.category}</span>
-            <span className="inline-flex items-center gap-1.5"><Calendar className="size-3.5" /> {formatDate(post.date)}</span>
-            <span className="inline-flex items-center gap-1.5"><Clock className="size-3.5" /> {post.readTime} Lesezeit</span>
+            <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">
+              {category}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar className="size-3.5" /> {formatDate(post.date, lang)}
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <Clock className="size-3.5" /> {post.readTime} {de ? "Lesezeit" : "read"}
+            </span>
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">{post.title}</h1>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-3xl">{post.excerpt}</p>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">
+            {title}
+          </h1>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-3xl">{excerpt}</p>
         </div>
       </section>
 
       {/* Cover */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="rounded-3xl overflow-hidden border shadow-elevated aspect-[16/9]">
-          <img src={post.image} alt={post.title} className="size-full object-cover" />
+          <img src={post.image} alt={title} className="size-full object-cover" />
         </div>
       </section>
 
-      {/* Body */}
+      {/* Body + TOC */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[1fr_280px] gap-12">
         <article className="max-w-2xl mx-auto lg:mx-0 prose-lg">
+
           {/* Share top */}
           <div className="flex items-center justify-between mb-10 pb-8 border-b">
-            <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">Teilen</span>
-            <Share title={post.title} />
+            <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+              {de ? "Teilen" : "Share"}
+            </span>
+            <Share title={title} de={de} />
           </div>
 
-          {post.body.map((b, i) => {
-            if (b.type === "h2") return <h2 key={i} id={b.id} className="scroll-mt-28 font-display text-3xl sm:text-4xl font-bold tracking-tight mt-14 mb-5">{b.text}</h2>;
-            if (b.type === "h3") return <h3 key={i} className="font-display text-2xl font-semibold mt-10 mb-4">{b.text}</h3>;
-            if (b.type === "p") return <p key={i} className="text-[17px] leading-[1.8] text-foreground/85 mb-6">{b.text}</p>;
+          {/* Body blocks */}
+          {body.map((b, i) => {
+            if (b.type === "h2") return (
+              <h2 key={i} id={b.id} className="scroll-mt-28 font-display text-3xl sm:text-4xl font-bold tracking-tight mt-14 mb-5">
+                {b.text}
+              </h2>
+            );
+            if (b.type === "h3") return (
+              <h3 key={i} className="font-display text-2xl font-semibold mt-10 mb-4">{b.text}</h3>
+            );
+            if (b.type === "p") return (
+              <p key={i} className="text-[17px] leading-[1.8] text-foreground/85 mb-6">{b.text}</p>
+            );
             if (b.type === "quote") return (
               <blockquote key={i} className="my-10 rounded-2xl border-l-4 border-primary bg-gradient-to-br from-primary/5 to-transparent p-7">
                 <p className="font-display text-xl sm:text-2xl leading-snug text-foreground italic">"{b.text}"</p>
@@ -157,9 +204,11 @@ const Inner = () => {
 
           {/* FAQ */}
           <div className="mt-20 pt-12 border-t">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-8">Häufige Fragen</h2>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-8">
+              {de ? "Häufige Fragen" : "Frequently asked questions"}
+            </h2>
             <div className="space-y-4">
-              {post.faq.map((f, i) => (
+              {faq.map((f, i) => (
                 <details key={i} className="group rounded-2xl border bg-card p-6 open:shadow-soft transition-shadow">
                   <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
                     <span className="font-display text-lg font-semibold">{f.q}</span>
@@ -174,20 +223,23 @@ const Inner = () => {
           {/* Share bottom */}
           <div className="mt-14 flex items-center justify-between pt-8 border-t">
             <Link to="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-              <ArrowLeft className="size-4" /> Alle Artikel
+              <ArrowLeft className="size-4" /> {de ? "Alle Artikel" : "All articles"}
             </Link>
-            <Share title={post.title} />
+            <Share title={title} de={de} />
           </div>
         </article>
 
         {/* TOC */}
         <aside className="hidden lg:block">
           <div className="sticky top-28">
-            <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-4">Inhalt</div>
+            <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-4">
+              {de ? "Inhalt" : "Contents"}
+            </div>
             <ul className="space-y-2.5 border-l">
-              {post.toc.map((t) => (
+              {toc.map((t) => (
                 <li key={t.id}>
-                  <a href={`#${t.id}`} className="block pl-4 -ml-px border-l border-transparent hover:border-primary text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href={`#${t.id}`}
+                    className="block pl-4 -ml-px border-l border-transparent hover:border-primary text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {t.label}
                   </a>
                 </li>
@@ -202,17 +254,27 @@ const Inner = () => {
         <div className="relative overflow-hidden rounded-3xl bg-deep p-10 sm:p-16 text-center">
           <div className="absolute inset-0 bg-mesh opacity-40" aria-hidden />
           <div className="relative max-w-2xl mx-auto">
-            <div className="text-xs uppercase tracking-[0.25em] text-primary-glow font-semibold mb-4">Partnerschaft</div>
-            <h2 className="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">Jetzt SAIDA MagicBox Partner werden</h2>
+            <div className="text-xs uppercase tracking-[0.25em] text-primary-glow font-semibold mb-4">
+              {de ? "Partnerschaft" : "Partnership"}
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">
+              {de ? "Jetzt SAIDA MagicBox Partner werden" : "Become a SAIDA MagicBox partner"}
+            </h2>
             <p className="mt-5 text-white/70 text-lg leading-relaxed">
-              Großhandelspreise, Marketing-Support und exklusive Gebiete für ambitionierte Handyshops in Europa.
+              {de
+                ? "Großhandelspreise, Marketing-Support und exklusive Gebiete für ambitionierte Handyshops in Europa."
+                : "Wholesale pricing, marketing support and exclusive territories for ambitious mobile phone shops across Europe."}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="rounded-full bg-white text-foreground hover:bg-white/90">
-                <Link to="/#dealer">Händler werden <ArrowRight className="ml-1.5 size-4" /></Link>
+                <Link to="/#dealer">
+                  {de ? "Händler werden" : "Become a dealer"} <ArrowRight className="ml-1.5 size-4" />
+                </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full border-white/30 bg-white/5 text-white hover:bg-white/10 hover:text-white">
-                <Link to="/#contact">Sample Box anfragen</Link>
+                <Link to="/#contact">
+                  {de ? "Sample Box anfragen" : "Request sample box"}
+                </Link>
               </Button>
             </div>
           </div>
@@ -223,22 +285,30 @@ const Inner = () => {
       {related.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-32">
           <div className="flex items-end justify-between mb-10">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">Weiterlesen</h2>
-            <Link to="/blog" className="text-sm text-primary inline-flex items-center gap-1.5 font-semibold">Alle Artikel <ArrowUpRight className="size-3.5" /></Link>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
+              {de ? "Weiterlesen" : "Read more"}
+            </h2>
+            <Link to="/blog" className="text-sm text-primary inline-flex items-center gap-1.5 font-semibold">
+              {de ? "Alle Artikel" : "All articles"} <ArrowUpRight className="size-3.5" />
+            </Link>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {related.map((p) => (
               <Link key={p.slug} to={`/blog/${p.slug}`}
                 className="group rounded-3xl border bg-card overflow-hidden hover:shadow-elevated hover:-translate-y-1 transition-all duration-500">
                 <div className="aspect-[16/10] overflow-hidden">
-                  <img src={p.image} alt={p.title} className="size-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                  <img src={p.image} alt={relTitle(p)} className="size-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
                 </div>
                 <div className="p-7">
                   <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                    <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">{p.category}</span>
+                    <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">
+                      {relCat(p)}
+                    </span>
                     <span className="inline-flex items-center gap-1.5"><Clock className="size-3.5" /> {p.readTime}</span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold leading-snug group-hover:text-primary transition-colors">{p.title}</h3>
+                  <h3 className="font-display text-xl font-semibold leading-snug group-hover:text-primary transition-colors">
+                    {relTitle(p)}
+                  </h3>
                 </div>
               </Link>
             ))}
@@ -257,4 +327,5 @@ const BlogPost = () => (
     <Inner />
   </I18nProvider>
 );
+
 export default BlogPost;
