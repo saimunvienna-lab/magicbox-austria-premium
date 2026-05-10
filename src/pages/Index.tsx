@@ -16,6 +16,7 @@ import Dealer from "@/components/sections/Dealer";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
+import Order from "@/components/sections/Order";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -45,6 +46,7 @@ const Index = () => (
       <Benefits />
       <Blog />
       <Testimonials />
+      <Order />
       <Contact />
       <Dealer />
       <Footer />
