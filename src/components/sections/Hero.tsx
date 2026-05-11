@@ -1,7 +1,8 @@
 import { ArrowRight, Play, Sparkles, MapPin, Globe2, Smartphone, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
-import boxFront from "@/assets/saida-box-front.jpg";
+import boxFront from "@/assets/saida-box-front.webp";
+import boxFrontMobile from "@/assets/saida-box-front-mobile.webp";
 import boxSide from "@/assets/saida-box-side.jpg";
 
 const Hero = () => {
@@ -54,16 +55,23 @@ const Hero = () => {
           <div className="lg:col-span-5 relative animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-primary-glow/40 blur-3xl" />
             <div className="relative animate-float">
-              <img
-                src={boxFront}
-                alt="SAIDA MagicBox premium tempered glass packaging"
-                width={600}
-                height={750}
-                fetchPriority="high"
-                decoding="sync"
-                loading="eager"
-                className="w-full max-w-md mx-auto h-auto rounded-3xl shadow-elevated"
-              />
+              <picture>
+                <source
+                  media="(max-width: 640px)"
+                  srcSet={boxFrontMobile}
+                  type="image/webp"
+                />
+                <img
+                  src={boxFront}
+                  alt="SAIDA MagicBox premium tempered glass packaging"
+                  width={800}
+                  height={712}
+                  fetchPriority="high"
+                  decoding="sync"
+                  loading="eager"
+                  className="w-full max-w-md mx-auto h-auto rounded-3xl shadow-elevated"
+                />
+              </picture>
             </div>
             <div className="hidden sm:block absolute -bottom-6 -left-6 lg:-left-12 w-32 lg:w-40 rotate-[-6deg] animate-float-slow">
               <img
