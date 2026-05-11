@@ -54,11 +54,27 @@ const Hero = () => {
           <div className="lg:col-span-5 relative animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-primary-glow/40 blur-3xl" />
             <div className="relative animate-float">
-              <img src={boxFront} alt="SAIDA MagicBox premium tempered glass packaging" width={1200} height={1500}
-                className="w-full max-w-md mx-auto h-auto rounded-3xl shadow-elevated" loading="eager" />
+              <img
+                src={boxFront}
+                alt="SAIDA MagicBox premium tempered glass packaging"
+                width={600}
+                height={750}
+                fetchPriority="high"
+                decoding="sync"
+                loading="eager"
+                className="w-full max-w-md mx-auto h-auto rounded-3xl shadow-elevated"
+              />
             </div>
             <div className="hidden sm:block absolute -bottom-6 -left-6 lg:-left-12 w-32 lg:w-40 rotate-[-6deg] animate-float-slow">
-              <img src={boxSide} alt="MagicBox side view" className="w-full h-auto rounded-2xl shadow-elevated border border-white/40" loading="eager" />
+              <img
+                src={boxSide}
+                alt="MagicBox side view"
+                width={160}
+                height={160}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto rounded-2xl shadow-elevated border border-white/40"
+              />
             </div>
             <div className="absolute -bottom-4 right-2 sm:right-4 glass rounded-2xl p-4 shadow-soft animate-float-slow max-w-[180px]">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Found in</div>
