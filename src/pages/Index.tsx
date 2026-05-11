@@ -1,26 +1,29 @@
+import { lazy, Suspense } from "react";
 import { I18nProvider } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
-import Problem from "@/components/sections/Problem";
-import Solution from "@/components/sections/Solution";
-import Technology from "@/components/sections/Technology";
-import QRWorkflow from "@/components/sections/QRWorkflow";
-import MagicBoxSystem from "@/components/sections/MagicBoxSystem";
-import Gallery from "@/components/sections/Gallery";
-import Austria from "@/components/sections/Austria";
-import Benefits from "@/components/sections/Benefits";
-import Blog from "@/components/sections/Blog";
-import Testimonials from "@/components/sections/Testimonials";
-import Contact from "@/components/sections/Contact";
-import Dealer from "@/components/sections/Dealer";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
-import Order from "@/components/sections/Order";
 
-// ✅ Flag — false = hidden | true = visible
-const SHOW_GALLERY = false
-const SHOW_TESTIMONIALS = false
+// Lazy loaded sections for better mobile performance
+const Problem = lazy(() => import("@/components/sections/Problem"));
+const Solution = lazy(() => import("@/components/sections/Solution"));
+const Technology = lazy(() => import("@/components/sections/Technology"));
+const QRWorkflow = lazy(() => import("@/components/sections/QRWorkflow"));
+const MagicBoxSystem = lazy(() => import("@/components/sections/MagicBoxSystem"));
+const Gallery = lazy(() => import("@/components/sections/Gallery"));
+const Austria = lazy(() => import("@/components/sections/Austria"));
+const Benefits = lazy(() => import("@/components/sections/Benefits"));
+const Blog = lazy(() => import("@/components/sections/Blog"));
+const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
+const Order = lazy(() => import("@/components/sections/Order"));
+const Contact = lazy(() => import("@/components/sections/Contact"));
+const Dealer = lazy(() => import("@/components/sections/Dealer"));
+
+// Flag — false = hidden | true = visible
+const SHOW_GALLERY = false;
+const SHOW_TESTIMONIALS = false;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -30,29 +33,47 @@ const jsonLd = {
   brand: { "@type": "Brand", name: "SAIDA" },
   countryOfOrigin: "AT",
   category: "B2B Retail Inventory System",
-  manufacturer: { "@type": "Organization", name: "SAIDA MagicBox", address: { "@type": "PostalAddress", addressLocality: "Innsbruck", addressCountry: "AT" } },
+  manufacturer: {
+    "@type": "Organization",
+    name: "SAIDA MagicBox",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Innsbruck",
+      addressCountry: "AT",
+    },
+  },
 };
 
 const Index = () => (
   <I18nProvider>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
     <main className="bg-background overflow-x-clip">
       <Navbar />
       <h1 className="sr-only">SAIDA MagicBox — Premium Tempered Glass Inventory System</h1>
+
+      {/* Hero loads immediately */}
       <Hero />
-      <Problem />
-      <Solution />
-      <Technology />
-      <QRWorkflow />
-      <MagicBoxSystem />
-      {SHOW_GALLERY && <Gallery />}
-      <Austria />
-      <Benefits />
-      <Blog />
-      {SHOW_TESTIMONIALS && <Testimonials />}
-      <Order />
-      <Contact />
-      <Dealer />
+
+      {/* All other sections load lazily */}
+      <Suspense fallback={<div className="h-32" />}>
+        <Problem />
+        <Solution />
+        <Technology />
+        <QRWorkflow />
+        <MagicBoxSystem />
+        {SHOW_GALLERY && <Gallery />}
+        <Austria />
+        <Benefits />
+        <Blog />
+        {SHOW_TESTIMONIALS && <Testimonials />}
+        <Order />
+        <Contact />
+        <Dealer />
+      </Suspense>
+
       <Footer />
       <WhatsAppButton />
       <CookieBanner />
