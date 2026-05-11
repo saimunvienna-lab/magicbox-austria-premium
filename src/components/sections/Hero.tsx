@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
 import boxFront from "@/assets/saida-box-front.webp";
 import boxFrontMobile from "@/assets/saida-box-front-mobile.webp";
-import boxSide from "@/assets/saida-box-side.jpg";
+import boxSide from "@/assets/saida-box-side.webp";
 
 const Hero = () => {
   const { t } = useI18n();
