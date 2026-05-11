@@ -18,6 +18,10 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
 import Order from "@/components/sections/Order";
 
+// ✅ Flag — false = hidden | true = visible
+const SHOW_GALLERY = false
+const SHOW_TESTIMONIALS = false
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -41,11 +45,11 @@ const Index = () => (
       <Technology />
       <QRWorkflow />
       <MagicBoxSystem />
-      <Gallery />
+      {SHOW_GALLERY && <Gallery />}
       <Austria />
       <Benefits />
       <Blog />
-      <Testimonials />
+      {SHOW_TESTIMONIALS && <Testimonials />}
       <Order />
       <Contact />
       <Dealer />
