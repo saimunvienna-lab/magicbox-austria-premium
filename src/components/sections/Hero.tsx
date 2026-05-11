@@ -16,8 +16,10 @@ const Hero = () => {
   return (
     <section className="relative pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden bg-hero">
       <div className="absolute inset-0 bg-mesh pointer-events-none" />
-      <div className="absolute -top-40 -right-40 size-[600px] rounded-full bg-primary-glow/20 blur-3xl pointer-events-none animate-float-slow" />
-      <div className="absolute -bottom-60 -left-40 size-[600px] rounded-full bg-primary/15 blur-3xl pointer-events-none animate-float" />
+
+      {/* Hidden on mobile — GPU intensive */}
+      <div className="hidden sm:block absolute -top-40 -right-40 size-[600px] rounded-full bg-primary-glow/20 blur-3xl pointer-events-none animate-float-slow" />
+      <div className="hidden sm:block absolute -bottom-60 -left-40 size-[600px] rounded-full bg-primary/15 blur-3xl pointer-events-none animate-float" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -53,8 +55,10 @@ const Hero = () => {
           </div>
 
           <div className="lg:col-span-5 relative animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-primary-glow/40 blur-3xl" />
-            <div className="relative animate-float">
+            <div className="hidden sm:block absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-primary-glow/40 blur-3xl" />
+
+            {/* No animation on mobile */}
+            <div className="relative sm:animate-float">
               <picture>
                 <source
                   media="(max-width: 640px)"
@@ -73,6 +77,7 @@ const Hero = () => {
                 />
               </picture>
             </div>
+
             <div className="hidden sm:block absolute -bottom-6 -left-6 lg:-left-12 w-32 lg:w-40 rotate-[-6deg] animate-float-slow">
               <img
                 src={boxSide}
@@ -84,12 +89,14 @@ const Hero = () => {
                 className="w-full h-auto rounded-2xl shadow-elevated border border-white/40"
               />
             </div>
-            <div className="absolute -bottom-4 right-2 sm:right-4 glass rounded-2xl p-4 shadow-soft animate-float-slow max-w-[180px]">
+
+            <div className="absolute -bottom-4 right-2 sm:right-4 glass rounded-2xl p-4 shadow-soft sm:animate-float-slow max-w-[180px]">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Found in</div>
               <div className="font-display font-bold text-2xl text-gradient">2.4s</div>
               <div className="text-xs">iPhone 15 Pro Max</div>
             </div>
-            <div className="absolute -top-4 -right-2 sm:-right-6 glass rounded-2xl p-4 shadow-soft animate-float max-w-[180px]" style={{ animationDelay: "1s" }}>
+
+            <div className="absolute -top-4 -right-2 sm:-right-6 glass rounded-2xl p-4 shadow-soft sm:animate-float max-w-[180px]" style={{ animationDelay: "1s" }}>
               <div className="flex items-center gap-2">
                 <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
                 <div className="text-xs">Live inventory</div>
