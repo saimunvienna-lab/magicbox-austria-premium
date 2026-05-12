@@ -210,6 +210,11 @@ const translations: Record<Lang, Dict> = {
     p2_t: "Verlorene Zeit", p2_d: "10–20 Minuten pro Kunde für die Suche.",
     p3_t: "Gebundenes Kapital", p3_d: "Überbestand bei Slow-Movern, Out-of-Stock bei Top-Modellen.",
 
+    benefit_eyebrow: "Der Händler-Vorteil",
+    pb1_t: "Hohes Gewinnpotenzial", pb1_d: "Günstig einkaufen. Schnell verkaufen. Pro Stück verdienen. Starke Marge für Handyshops.",
+    pb2_t: "Schnelldreher-Produkt", pb2_d: "Hohe Nachfrage in jedem Handyshop. Verkauft sich schnell — kein toter Bestand.",
+    pb3_t: "Sofort lieferbar", pb3_d: "Verfügbar in großen Mengen mit konstanter Versorgung. Perfekt für Nachbestellungen und Wachstum.",
+
     sol_eyebrow: "Die Lösung", sol_title: "MagicBox ersetzt das Chaos durch ein intelligentes System.",
     sol_sub: "Ein präzises Schubladensystem mit QR-Produktfinder — kleiner als ein Tablet, ersetzt eine ganze Lagerwand.",
     sol_1_t: "Kompaktes Format", sol_1_d: "Eine MagicBox ersetzt eine ganze Regalwand.",
