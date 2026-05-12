@@ -62,6 +62,7 @@ const Index = () => (
         <Problem />
         <Solution />
         <Technology />
+        <Order />
         <QRWorkflow />
         <MagicBoxSystem />
         {SHOW_GALLERY && <Gallery />}
@@ -69,7 +70,6 @@ const Index = () => (
         <Benefits />
         <Blog />
         {SHOW_TESTIMONIALS && <Testimonials />}
-        <Order />
         <Contact />
         <Dealer />
       </Suspense>

@@ -24,7 +24,7 @@ const Navbar = () => {
     { href: `${prefix}#solution`, label: t("nav_solution") },
     { href: `${prefix}#technology`, label: t("nav_technology") },
     { href: `${prefix}#how`, label: t("nav_how") },
-    { href: `${prefix}#gallery`, label: t("nav_gallery") },
+    { href: `${prefix}#order`, label: t("nav_order") },
     { href: `${prefix}#blog`, label: t("nav_blog") },
     { href: `${prefix}#contact`, label: t("nav_contact") },
   ];
