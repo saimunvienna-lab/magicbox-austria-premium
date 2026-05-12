@@ -38,7 +38,7 @@ const jsonLd = {
     name: "SAIDA MagicBox",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Innsbruck",
+      addressLocality: "Vienna",
       addressCountry: "AT",
     },
   },

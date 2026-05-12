@@ -10,15 +10,15 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
   impressum: {
     en: { title: "Imprint", body: [
       "Information according to § 5 ECG (Austrian E-Commerce Act) and § 25 MedienG.",
-      "SAIDA MagicBox\nInnsbruck, Austria",
-      "Phone: +43 676 9617723\nEmail: hello@saidamagicbox.eu",
+      "SAIDA MagicBox\nVienna, Austria",
+      "Phone: +43 676 9617723\nEmail: office@saidamagicbox.com",
       "Managing Director: SAIDA MagicBox Team\nVAT-ID: To be added\nCommercial Register: To be added",
       "Online dispute resolution platform of the European Commission: https://ec.europa.eu/consumers/odr",
     ]},
     de: { title: "Impressum", body: [
       "Angaben gemäß § 5 ECG und § 25 MedienG.",
-      "SAIDA MagicBox\nInnsbruck, Österreich",
-      "Telefon: +43 676 9617723\nE-Mail: hello@saidamagicbox.eu",
+      "SAIDA MagicBox\nWien, Österreich",
+      "Telefon: +43 676 9617723\nE-Mail: office@saidamagicbox.com",
       "Geschäftsführung: SAIDA MagicBox Team\nUID-Nr.: wird ergänzt\nFirmenbuchnummer: wird ergänzt",
       "Plattform der EU-Kommission zur Online-Streitbeilegung: https://ec.europa.eu/consumers/odr",
     ]},
@@ -26,7 +26,7 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
   datenschutz: {
     en: { title: "Privacy Policy", body: [
       "We process your personal data in accordance with the EU General Data Protection Regulation (GDPR) and the Austrian Data Protection Act.",
-      "Data controller: SAIDA MagicBox, Innsbruck, Austria. Email: hello@saidamagicbox.eu.",
+      "Data controller: SAIDA MagicBox, Vienna, Austria. Email: office@saidamagicbox.com.",
       "Data collected: contact form details (name, email, company, message), dealer inquiries, server logs, cookie preferences.",
       "Legal basis: Art. 6(1)(a) consent, (b) contract initiation, (f) legitimate interest in operating and securing this website.",
       "Recipients: hosting provider within the EU, email provider, no transfers to third countries without appropriate safeguards.",
@@ -35,7 +35,7 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
     ]},
     de: { title: "Datenschutzerklärung", body: [
       "Wir verarbeiten Ihre personenbezogenen Daten gemäß DSGVO und österreichischem Datenschutzgesetz.",
-      "Verantwortlicher: SAIDA MagicBox, Innsbruck, Österreich. E-Mail: hello@saidamagicbox.eu.",
+      "Verantwortlicher: SAIDA MagicBox, Wien, Österreich. E-Mail: office@saidamagicbox.com.",
       "Erhobene Daten: Kontaktformular (Name, E-Mail, Firma, Nachricht), Händleranfragen, Server-Logs, Cookie-Einstellungen.",
       "Rechtsgrundlagen: Art. 6 Abs. 1 lit. a Einwilligung, lit. b Vertragsanbahnung, lit. f berechtigtes Interesse am sicheren Betrieb der Website.",
       "Empfänger: Hosting-Anbieter in der EU, E-Mail-Provider; keine Übermittlung in Drittstaaten ohne geeignete Garantien.",
@@ -49,14 +49,14 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
       "Offers are non-binding. A contract is concluded by our written order confirmation.",
       "Prices are net, exclusive of VAT and shipping unless stated otherwise.",
       "Payment terms, delivery times and warranty are set out in the individual offer or order confirmation.",
-      "Place of performance and jurisdiction is Innsbruck, Austria. Austrian law applies, excluding the UN Sales Convention.",
+      "Place of performance and jurisdiction is Vienna, Austria. Austrian law applies, excluding the UN Sales Convention.",
     ]},
     de: { title: "Allgemeine Geschäftsbedingungen (AGB)", body: [
       "Diese AGB gelten für alle B2B-Bestellungen bei SAIDA MagicBox.",
       "Angebote sind freibleibend. Ein Vertrag kommt durch unsere schriftliche Auftragsbestätigung zustande.",
       "Preise verstehen sich netto, zzgl. USt. und Versand, sofern nicht anders angegeben.",
       "Zahlungsbedingungen, Lieferzeiten und Gewährleistung ergeben sich aus dem jeweiligen Angebot bzw. der Auftragsbestätigung.",
-      "Erfüllungsort und Gerichtsstand ist Innsbruck, Österreich. Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.",
+      "Erfüllungsort und Gerichtsstand ist Wien, Österreich. Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.",
     ]},
   },
   widerruf: {
@@ -64,14 +64,14 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
       "Information on the right of withdrawal for consumers within the meaning of the Austrian Consumer Protection Act (KSchG) and the FAGG.",
       "You have the right to withdraw from a distance contract within 14 days without giving any reason.",
       "The withdrawal period expires 14 days from the day on which you, or a third party indicated by you, takes physical possession of the goods.",
-      "To exercise the right of withdrawal, please inform us by clear declaration (e.g. email) at hello@saidamagicbox.eu.",
+      "To exercise the right of withdrawal, please inform us by clear declaration (e.g. email) at office@saidamagicbox.com.",
       "B2B orders between businesses are excluded from the statutory right of withdrawal.",
     ]},
     de: { title: "Widerrufsrecht", body: [
       "Informationen zum Widerrufsrecht für Verbraucher iSd KSchG und FAGG.",
       "Sie haben das Recht, binnen 14 Tagen ohne Angabe von Gründen vom Fernabsatzvertrag zurückzutreten.",
       "Die Widerrufsfrist beträgt 14 Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter die Waren in Besitz genommen haben.",
-      "Zur Ausübung Ihres Widerrufsrechts informieren Sie uns mittels eindeutiger Erklärung (z. B. E-Mail) an hello@saidamagicbox.eu.",
+      "Zur Ausübung Ihres Widerrufsrechts informieren Sie uns mittels eindeutiger Erklärung (z. B. E-Mail) an office@saidamagicbox.com.",
       "B2B-Bestellungen zwischen Unternehmern sind vom gesetzlichen Widerrufsrecht ausgenommen.",
     ]},
   },

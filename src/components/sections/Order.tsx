@@ -302,7 +302,7 @@ const Order = () => {
 
   /* ── SUCCESS SCREEN ─────────────────────────────────── */
   if (submitted) {
-    const wa = `https://wa.me/4367696177230?text=${encodeURIComponent(
+    const wa = `https://wa.me/436769617723?text=${encodeURIComponent(
       (de ? "Hallo SAIDA, ich habe gerade eine Bestellung abgesendet." : "Hello SAIDA, I just submitted an order.")
       + ` (${shopName})`
     )}`;

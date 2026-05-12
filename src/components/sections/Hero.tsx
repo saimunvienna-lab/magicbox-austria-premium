@@ -93,7 +93,7 @@ const Hero = () => {
             <div className="absolute -bottom-4 right-2 sm:right-4 glass rounded-2xl p-4 shadow-soft sm:animate-float-slow max-w-[180px]">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Found in</div>
               <div className="font-display font-bold text-2xl text-gradient">2.4s</div>
-              <div className="text-xs">iPhone 15 Pro Max</div>
+              <div className="text-xs">iPhone 17 Pro Max</div>
             </div>
 
             <div className="absolute -top-4 -right-2 sm:-right-6 glass rounded-2xl p-4 shadow-soft sm:animate-float max-w-[180px]" style={{ animationDelay: "1s" }}>

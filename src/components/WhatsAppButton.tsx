@@ -1,5 +1,5 @@
 const WhatsAppButton = () => {
-  const phone = "4367696177230";
+  const phone = "436769617723";
   const href = `https://wa.me/${phone}?text=${encodeURIComponent("Hello SAIDA MagicBox, I would like more information.")}`;
   return (
     <a
