@@ -42,6 +42,11 @@ const translations: Record<Lang, Dict> = {
     p2_t: "Lost time", p2_d: "Staff spend 10–20 minutes per customer hunting for the right protector.",
     p3_t: "Tied-up capital", p3_d: "Overstock on slow movers, stockouts on hot models. Cash sits in cardboard.",
 
+    benefit_eyebrow: "The Dealer Advantage",
+    pb1_t: "High Profit Potential", pb1_d: "Buy low. Sell fast. Earn per unit. Strong resale margin designed for mobile shop owners.",
+    pb2_t: "Fast Selling Product", pb2_d: "High customer demand in every mobile shop. Moves quickly — no dead stock issues.",
+    pb3_t: "Ready Stock Supply", pb3_d: "Available in bulk with consistent supply. Perfect for repeat orders and shop scaling.",
+
     sol_eyebrow: "The Solution",
     sol_title: "MagicBox replaces the chaos with one intelligent system.",
     sol_sub: "A precision-engineered drawer system, paired with a QR-driven product finder, that fits every modern smartphone in a footprint smaller than a tablet.",
