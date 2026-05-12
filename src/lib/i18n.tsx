@@ -14,7 +14,7 @@ const translations: Record<Lang, Dict> = {
     nav_solution: "Solution",
     nav_technology: "Technology",
     nav_how: "How it works",
-    nav_gallery: "Gallery",
+    nav_order: "Order",
     nav_blog: "Blog",
     nav_contact: "Contact",
     nav_dealer: "Become a Dealer",
@@ -194,7 +194,7 @@ const translations: Record<Lang, Dict> = {
   },
   de: {
     nav_solution: "Lösung", nav_technology: "Technologie", nav_how: "So funktioniert's",
-    nav_gallery: "Galerie", nav_blog: "Blog", nav_contact: "Kontakt", nav_dealer: "Händler werden",
+    nav_order: "Bestellung", nav_blog: "Blog", nav_contact: "Kontakt", nav_dealer: "Händler werden",
 
     hero_eyebrow: "Entwickelt in Österreich · Gemacht für Europa",
     hero_title: "Eine Box.", hero_title_2: "Jedes Handy.",
