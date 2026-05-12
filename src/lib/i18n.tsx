@@ -42,6 +42,11 @@ const translations: Record<Lang, Dict> = {
     p2_t: "Lost time", p2_d: "Staff spend 10–20 minutes per customer hunting for the right protector.",
     p3_t: "Tied-up capital", p3_d: "Overstock on slow movers, stockouts on hot models. Cash sits in cardboard.",
 
+    benefit_eyebrow: "The Dealer Advantage",
+    pb1_t: "High Profit Potential", pb1_d: "Buy low. Sell fast. Earn per unit. Strong resale margin designed for mobile shop owners.",
+    pb2_t: "Fast Selling Product", pb2_d: "High customer demand in every mobile shop. Moves quickly — no dead stock issues.",
+    pb3_t: "Ready Stock Supply", pb3_d: "Available in bulk with consistent supply. Perfect for repeat orders and shop scaling.",
+
     sol_eyebrow: "The Solution",
     sol_title: "MagicBox replaces the chaos with one intelligent system.",
     sol_sub: "A precision-engineered drawer system, paired with a QR-driven product finder, that fits every modern smartphone in a footprint smaller than a tablet.",
@@ -204,6 +209,11 @@ const translations: Record<Lang, Dict> = {
     p1_t: "Endloses Lager", p1_d: "Tausende Mikro-SKUs für jedes Modell — null Übersicht.",
     p2_t: "Verlorene Zeit", p2_d: "10–20 Minuten pro Kunde für die Suche.",
     p3_t: "Gebundenes Kapital", p3_d: "Überbestand bei Slow-Movern, Out-of-Stock bei Top-Modellen.",
+
+    benefit_eyebrow: "Der Händler-Vorteil",
+    pb1_t: "Hohes Gewinnpotenzial", pb1_d: "Günstig einkaufen. Schnell verkaufen. Pro Stück verdienen. Starke Marge für Handyshops.",
+    pb2_t: "Schnelldreher-Produkt", pb2_d: "Hohe Nachfrage in jedem Handyshop. Verkauft sich schnell — kein toter Bestand.",
+    pb3_t: "Sofort lieferbar", pb3_d: "Verfügbar in großen Mengen mit konstanter Versorgung. Perfekt für Nachbestellungen und Wachstum.",
 
     sol_eyebrow: "Die Lösung", sol_title: "MagicBox ersetzt das Chaos durch ein intelligentes System.",
     sol_sub: "Ein präzises Schubladensystem mit QR-Produktfinder — kleiner als ein Tablet, ersetzt eine ganze Lagerwand.",
