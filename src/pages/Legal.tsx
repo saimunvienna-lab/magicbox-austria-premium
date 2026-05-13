@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
+import SEO from "@/components/SEO";
 
 type LegalKey = "impressum" | "datenschutz" | "agb" | "widerruf" | "cookies";
 
@@ -94,8 +95,16 @@ const content: Record<LegalKey, { en: { title: string; body: string[] }; de: { t
 const Inner = ({ slug }: { slug: LegalKey }) => {
   const { lang, t } = useI18n();
   const data = content[slug][lang === "de" ? "de" : "en"];
+  const titles: Record<LegalKey, string> = {
+    impressum: "Impressum | SAIDA MagicBox",
+    datenschutz: "Datenschutzerklärung | SAIDA MagicBox",
+    agb: "AGB | SAIDA MagicBox",
+    widerruf: "Widerrufsbelehrung | SAIDA MagicBox",
+    cookies: "Cookie-Richtlinie | SAIDA MagicBox",
+  };
   return (
     <main className="bg-background min-h-screen">
+      <SEO title={titles[slug]} canonical={`https://saidamagicbox.com/${slug}`} />
       <Navbar />
       <article className="mx-auto max-w-3xl px-4 sm:px-6 pt-32 pb-24">
         <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8">

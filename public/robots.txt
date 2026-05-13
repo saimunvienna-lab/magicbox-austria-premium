@@ -1,4 +1,25 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+# AI crawlers — allow indexing for AI search visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://saidamagicbox.com/sitemap.xml

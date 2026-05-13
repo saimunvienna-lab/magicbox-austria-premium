@@ -83,16 +83,6 @@ const Hero = () => {
       className="relative min-h-[90vh] lg:min-h-screen flex items-center pt-28 pb-20 sm:pt-32 sm:pb-24 overflow-hidden bg-hero"
     >
       <Helmet>
-        <title>Panzerglas Großhandel Österreich — 2000+ Modelle in einer Box | SAIDA MagicBox</title>
-        <meta
-          name="description"
-          content="Das B2B Lagersystem für Handy-Shops in Wien, Graz, Linz und ganz Österreich. 2000+ Smartphone-Modelle, 48+ Marken, ein intelligentes QR-System. In Österreich entwickelt."
-        />
-        <meta property="og:title" content="Panzerglas Großhandel Österreich — SAIDA MagicBox" />
-        <meta
-          property="og:description"
-          content="Das B2B Lagersystem für Handy-Shops in Österreich. 2000+ Modelle, 48+ Marken, intelligentes QR-System."
-        />
         <html lang={seoLang === "de" ? "de-AT" : "en"} />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>

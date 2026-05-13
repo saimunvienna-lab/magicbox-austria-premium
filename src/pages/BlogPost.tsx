@@ -8,6 +8,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { getPost, getRelated } from "@/lib/blog-data";
 import { toast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
 
 const formatDate = (d: string, locale: string) =>
   new Date(d).toLocaleDateString(locale === "de" ? "de-AT" : "en-GB", {
@@ -118,6 +119,12 @@ const Inner = () => {
 
   return (
     <main className="bg-background min-h-screen">
+      <SEO
+        title={`${title} | SAIDA MagicBox Blog`}
+        description={excerpt}
+        canonical={`https://saidamagicbox.com/blog/${post.slug}`}
+        ogImage={post.image || undefined}
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <Progress />
