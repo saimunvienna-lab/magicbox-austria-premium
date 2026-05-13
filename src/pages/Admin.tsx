@@ -4,6 +4,7 @@ import {
   Package, LogOut, RefreshCw, CheckCircle, Clock, Truck, XCircle,
   Users, Star, Search, Download, MessageSquare, ChevronDown, X, Eye
 } from "lucide-react";
+import SEO from "@/components/SEO";
 
 /* ── Types ─────────────────────────────────────────────── */
 type Order = {
@@ -198,6 +199,7 @@ const Admin = () => {
   /* ── LOGIN ── */
   if (!authed) return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <SEO title="Admin | SAIDA MagicBox" noIndex />
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 w-full max-w-sm">
         <div className="flex items-center gap-2 mb-6">
           <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
@@ -224,6 +226,7 @@ const Admin = () => {
   /* ── DASHBOARD ── */
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
+      <SEO title="Admin | SAIDA MagicBox" noIndex />
 
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
