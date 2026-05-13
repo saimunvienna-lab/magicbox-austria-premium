@@ -46,7 +46,7 @@ const translations: Record<Lang, Dict> = {
     hero_social_proof: "Already in use at phone shops in Vienna, Graz, Linz, Salzburg & Klagenfurt",
     hero_card_a: "iPhone 17 Pro Max → K42",
     hero_card_b: "Samsung Galaxy A14 5G",
-    hero_card_c: "60 drawers · 305 pieces",
+    hero_card_c: "61 drawers · 305 pieces",
 
     problem_part1_eyebrow: "The Problem",
     problem_part1_title: "Every phone shop loses €450 per week — without noticing.",
@@ -258,7 +258,7 @@ const translations: Record<Lang, Dict> = {
     hero_social_proof: "Bereits im Einsatz bei Handy-Shops in Wien, Graz, Linz, Salzburg & Klagenfurt",
     hero_card_a: "iPhone 17 Pro Max → K42",
     hero_card_b: "Samsung Galaxy A14 5G",
-    hero_card_c: "60 Schubladen · 305 Stück",
+    hero_card_c: "61 Schubladen · 305 Stück",
 
     problem_part1_eyebrow: "Das Problem",
     problem_part1_title: "Jeder Handyshop verliert €450 pro Woche — ohne es zu merken.",

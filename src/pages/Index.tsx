@@ -13,7 +13,6 @@ const Problem = lazy(() => import("@/components/sections/Problem"));
 const Solution = lazy(() => import("@/components/sections/Solution"));
 const Technology = lazy(() => import("@/components/sections/Technology"));
 const QRWorkflow = lazy(() => import("@/components/sections/QRWorkflow"));
-const HowItWorks = lazy(() => import("@/components/sections/HowItWorks"));
 const Comparison = lazy(() => import("@/components/sections/Comparison"));
 const FAQ = lazy(() => import("@/components/sections/FAQ"));
 const Gallery = lazy(() => import("@/components/sections/Gallery"));
@@ -41,7 +40,6 @@ const Index = () => (
       {/* All other sections load lazily */}
       <Suspense fallback={<div className="h-32" />}>
         <Problem />
-        <HowItWorks />
         <Technology />
         <Solution />
         <Comparison />

@@ -40,7 +40,6 @@ const Footer = () => {
             <ul className="space-y-2 text-muted-foreground">
               <li><a href="/#solution" className="hover:text-foreground">{t("nav_solution")}</a></li>
               <li><a href="/#technology" className="hover:text-foreground">{t("nav_technology")}</a></li>
-              <li><a href="/#how" className="hover:text-foreground">{t("nav_how")}</a></li>
               <li><a href="/#gallery" className="hover:text-foreground">{t("nav_gallery")}</a></li>
             </ul>
           </div>
