@@ -293,11 +293,11 @@ const Hero = () => {
               className="absolute -top-2 -right-2 sm:-right-6 lg:-right-10 glass rounded-2xl p-3.5 shadow-elevated max-w-[200px] rotate-3"
             >
               <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-muted-foreground">
-                <QrCode className="size-3.5 text-primary" /> QR Scan
+                <QrCode className="size-3.5 text-primary" /> QR scannen, Modell finden
               </div>
-              <div className="mt-1 font-display font-bold text-sm text-foreground">iPhone 17 Pro Max</div>
+              <div className="mt-1 font-display font-bold text-sm text-foreground">Samsung Galaxy S26 Ultra</div>
               <div className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
-                K42 ✓
+                K60+ ✓
               </div>
             </motion.div>
 
@@ -308,11 +308,12 @@ const Hero = () => {
               transition={{ opacity: { duration: 0.6, delay: 0.9 }, y: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 0.5 } }}
               className="absolute top-1/2 -left-2 sm:-left-6 lg:-left-10 -translate-y-1/2 glass rounded-2xl p-3.5 shadow-soft max-w-[200px] -rotate-3"
             >
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Drawer</div>
-              <div className="mt-1 font-display font-bold text-2xl text-gradient leading-none">K26</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Schublade</div>
+              <div className="mt-1 font-display font-bold text-2xl text-gradient leading-none">K60+</div>
               <div className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-foreground">
-                <CheckCircle2 className="size-3.5 text-emerald-500" /> Galaxy A14 5G
+                <CheckCircle2 className="size-3.5 text-emerald-500" /> Samsung Galaxy S26 Ultra
               </div>
+              <div className="mt-0.5 text-[10px] text-muted-foreground">Perfekt passend</div>
             </motion.div>
 
             {/* Floating Card C — bottom right */}

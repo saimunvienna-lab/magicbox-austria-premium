@@ -65,8 +65,8 @@ const translations: Record<Lang, Dict> = {
     bc1_t: "Maximum space", bc1_d: "From 300+ individual packs to one compact box. Your counter becomes selling space.",
     bc2_stat: "15", bc2_label: "Sec. instead of 12 min.",
     bc2_t: "Instant service", bc2_d: "Scan QR, open drawer, install glass. Faster service = more revenue per hour.",
-    bc3_stat: "€2,850", bc3_label: "Revenue per box",
-    bc3_t: "ROI in 30 days", bc3_d: "305 protectors at €10–15 each = €2,850–4,275 revenue. From a single box.",
+   bc3_stat: "€3,050–4,850", bc3_label: "Revenue per box",
+   bc3_t: "ROI in 30 days", bc3_d: "305 protectors: standard 0.33mm at €10–15 each plus ultra-thin 0.25mm (curved/edge displays) at €20 each = €3,050–4,850 revenue from a single box.",
     chaos_alt: "Cluttered phone-shop drawer with scattered tempered-glass packages",
     magicbox_alt: "SAIDA MagicBox unit with neatly organised drawers K01 to K60",
 
@@ -277,8 +277,8 @@ const translations: Record<Lang, Dict> = {
     bc1_t: "Maximaler Platz", bc1_d: "Von 300+ Einzelpackungen auf eine kompakte Box. Ihr Tresen wird zur Verkaufsfläche.",
     bc2_stat: "15", bc2_label: "Sek. statt 12 Minuten",
     bc2_t: "Sofort-Service", bc2_d: "QR-Code scannen, Schublade öffnen, Panzerglas anbringen. Schneller Service = mehr Umsatz pro Stunde.",
-    bc3_stat: "€2.850", bc3_label: "Umsatz pro Box",
-    bc3_t: "ROI in 30 Tagen", bc3_d: "305 Panzergläser bei €10–15 pro Stück = €2.850–4.275 Umsatz. Aus einer einzigen Box.",
+   bc3_stat: "€3.050–4.850", bc3_label: "Umsatz pro Box",
+   bc3_t: "ROI in 30 Tagen", bc3_d: "305 Panzergläser: Standard 0,33mm bei €10–15 pro Stück plus Ultra-Dünn 0,25mm (Curved/Edge-Displays) bei €20 pro Stück = €3.050–4.850 Umsatz aus einer einzigen Box.",
     chaos_alt: "Unordentliche Handyshop-Schublade mit verstreuten Panzerglas-Verpackungen",
     magicbox_alt: "SAIDA MagicBox mit sauber organisierten Schubladen K01 bis K60",
 
