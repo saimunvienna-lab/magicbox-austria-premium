@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { posts } from "@/lib/blog-data";
+import SEO from "@/components/SEO";
 
 const formatDate = (d: string, locale: string) =>
   new Date(d).toLocaleDateString(locale === "de" ? "de-AT" : "en-GB", {
@@ -24,6 +25,11 @@ const Inner = () => {
 
   return (
     <main className="bg-background min-h-screen">
+      <SEO
+        title="Panzerglas & Handy-Shop Blog — Tipps für Mobilfunkhändler | SAIDA MagicBox"
+        description="Aktuelle Insights für Handyshops in Österreich: Schutzfolien-Trends, Inventar-Management, Branchen-News und Praxistipps aus 14 Jahren Mobilfunk-Handel."
+        canonical="https://saidamagicbox.com/blog"
+      />
       <Navbar />
 
       {/* Hero */}

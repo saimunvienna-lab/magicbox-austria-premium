@@ -6,6 +6,7 @@ import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import SEO from "@/components/SEO";
 
 // Lazy loaded sections for better mobile performance
 const Problem = lazy(() => import("@/components/sections/Problem"));
@@ -29,6 +30,7 @@ const SHOW_TESTIMONIALS = false;
 const Index = () => (
   <I18nProvider>
     <main className="bg-background overflow-x-clip">
+      <SEO />
       <AnnouncementBar />
       <Navbar />
 
