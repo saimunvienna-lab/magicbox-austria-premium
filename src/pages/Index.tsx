@@ -40,7 +40,6 @@ const Index = () => (
       {/* All other sections load lazily */}
       <Suspense fallback={<div className="h-32" />}>
         <Problem />
-        <HowItWorks />
         <Technology />
         <Solution />
         <Comparison />
