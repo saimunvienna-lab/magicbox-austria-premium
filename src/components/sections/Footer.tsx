@@ -50,7 +50,7 @@ const Footer = () => {
               <li><a href="/#contact" className="hover:text-foreground">{t("nav_contact")}</a></li>
               <li><a href="/#dealer" className="hover:text-foreground">{t("nav_dealer")}</a></li>
               <li><a href="/#blog" className="hover:text-foreground">{t("nav_blog")}</a></li>
-              <li>Innsbruck, Austria 🇦🇹</li>
+              <li>Vienna, Austria 🇦🇹</li>
             </ul>
           </div>
 
