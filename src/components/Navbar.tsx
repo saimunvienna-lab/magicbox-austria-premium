@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useI18n, LANGS, Lang } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -10,8 +10,18 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const onHome = pathname === "/";
   const prefix = onHome ? "" : "/";
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -23,7 +33,6 @@ const Navbar = () => {
   const links = [
     { href: `${prefix}#solution`, label: t("nav_solution") },
     { href: `${prefix}#technology`, label: t("nav_technology") },
-    { href: `${prefix}#how`, label: t("nav_how") },
     { href: `${prefix}#order`, label: t("nav_order") },
     { href: `${prefix}#blog`, label: t("nav_blog") },
     { href: `${prefix}#contact`, label: t("nav_contact") },
@@ -34,12 +43,17 @@ const Navbar = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <nav className={cn("flex items-center justify-between rounded-2xl px-4 sm:px-6 py-3 transition-all duration-500",
           scrolled ? "glass shadow-soft" : "bg-transparent")}>
-          <Link to="/" className="flex items-center gap-2 group">
+          <a
+            href="/"
+            onClick={handleLogoClick}
+            aria-label="SAIDA MagicBox — Zur Startseite"
+            className="flex items-center gap-2 group cursor-pointer hover:opacity-80 transition-opacity"
+          >
             <div className="size-8 rounded-xl bg-gradient-to-br from-primary to-primary-glow shadow-glow grid place-items-center text-primary-foreground font-display font-bold">S</div>
             <span className="font-display font-semibold tracking-tight text-foreground">
               SAIDA <span className="text-gradient">MagicBox</span>
             </span>
-          </Link>
+          </a>
 
           <div className="hidden lg:flex items-center gap-7">
             {links.map((l) => (
