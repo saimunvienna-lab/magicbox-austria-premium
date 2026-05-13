@@ -309,9 +309,9 @@ const Hero = () => {
               className="absolute top-1/2 -left-2 sm:-left-6 lg:-left-10 -translate-y-1/2 glass rounded-2xl p-3.5 shadow-soft max-w-[200px] -rotate-3"
             >
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Schublade</div>
-              <div className="mt-1 font-display font-bold text-2xl text-gradient leading-none">K60+</div>
+              <div className="mt-1 font-display font-bold text-2xl text-gradient leading-none">K42</div>
               <div className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-foreground">
-                <CheckCircle2 className="size-3.5 text-emerald-500" /> Samsung Galaxy S26 Ultra
+                <CheckCircle2 className="size-3.5 text-emerald-500" /> iPhone 17 Pro Max
               </div>
               <div className="mt-0.5 text-[10px] text-muted-foreground">Perfekt passend</div>
             </motion.div>
