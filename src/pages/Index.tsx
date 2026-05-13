@@ -13,10 +13,11 @@ const Problem = lazy(() => import("@/components/sections/Problem"));
 const Solution = lazy(() => import("@/components/sections/Solution"));
 const Technology = lazy(() => import("@/components/sections/Technology"));
 const QRWorkflow = lazy(() => import("@/components/sections/QRWorkflow"));
-const MagicBoxSystem = lazy(() => import("@/components/sections/MagicBoxSystem"));
+const HowItWorks = lazy(() => import("@/components/sections/HowItWorks"));
+const Comparison = lazy(() => import("@/components/sections/Comparison"));
+const FAQ = lazy(() => import("@/components/sections/FAQ"));
 const Gallery = lazy(() => import("@/components/sections/Gallery"));
 const Austria = lazy(() => import("@/components/sections/Austria"));
-const Benefits = lazy(() => import("@/components/sections/Benefits"));
 const Blog = lazy(() => import("@/components/sections/Blog"));
 const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
 const Order = lazy(() => import("@/components/sections/Order"));
@@ -40,15 +41,16 @@ const Index = () => (
       {/* All other sections load lazily */}
       <Suspense fallback={<div className="h-32" />}>
         <Problem />
+        <HowItWorks />
         <Technology />
         <Solution />
+        <Comparison />
         <Order />
         <QRWorkflow />
-        <MagicBoxSystem />
         {SHOW_GALLERY && <Gallery />}
         <Austria />
-        <Benefits />
         <Blog />
+        <FAQ />
         {SHOW_TESTIMONIALS && <Testimonials />}
         <Contact />
         <Dealer />
