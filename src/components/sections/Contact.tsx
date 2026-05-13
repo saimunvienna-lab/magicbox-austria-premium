@@ -81,7 +81,7 @@ const Contact = () => {
               {[
                 { i: Mail,   l: "office@saidamagicbox.com" },
                 { i: Phone,  l: "+43 676 9617723" },
-                { i: MapPin, l: "Innsbruck, Austria" },
+                { i: MapPin, l: "Vienna, Austria" },
               ].map(({ i: Icon, l }) => (
                 <div key={l} className="flex items-center gap-4">
                   <div className="size-11 rounded-2xl glass grid place-items-center">
