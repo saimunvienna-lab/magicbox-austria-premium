@@ -5,6 +5,7 @@ import Hero from "@/components/sections/Hero";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
+import AnnouncementBar from "@/components/AnnouncementBar";
 
 // Lazy loaded sections for better mobile performance
 const Problem = lazy(() => import("@/components/sections/Problem"));
@@ -25,34 +26,11 @@ const Dealer = lazy(() => import("@/components/sections/Dealer"));
 const SHOW_GALLERY = false;
 const SHOW_TESTIMONIALS = false;
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  name: "SAIDA MagicBox",
-  description: "Premium B2B tempered glass inventory system for mobile phone shops. 2000+ smartphone models, 48+ brands, QR-code finder.",
-  brand: { "@type": "Brand", name: "SAIDA" },
-  countryOfOrigin: "AT",
-  category: "B2B Retail Inventory System",
-  manufacturer: {
-    "@type": "Organization",
-    name: "SAIDA MagicBox",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Vienna",
-      addressCountry: "AT",
-    },
-  },
-};
-
 const Index = () => (
   <I18nProvider>
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
     <main className="bg-background overflow-x-clip">
+      <AnnouncementBar />
       <Navbar />
-      <h1 className="sr-only">SAIDA MagicBox — Premium Tempered Glass Inventory System</h1>
 
       {/* Hero loads immediately */}
       <Hero />
@@ -60,8 +38,8 @@ const Index = () => (
       {/* All other sections load lazily */}
       <Suspense fallback={<div className="h-32" />}>
         <Problem />
-        <Solution />
         <Technology />
+        <Solution />
         <Order />
         <QRWorkflow />
         <MagicBoxSystem />
