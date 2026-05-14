@@ -1,11 +1,25 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, Calendar, Clock } from "lucide-react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { posts } from "@/lib/blog-data";
 import SEO from "@/components/SEO";
+import { supabase } from "@/lib/supabase";
+
+type Post = {
+  slug: string;
+  title: string;
+  title_en: string;
+  excerpt: string;
+  excerpt_en: string;
+  category: string;
+  category_en: string;
+  image: string;
+  read_time: string;
+  created_at: string;
+};
 
 const formatDate = (d: string, locale: string) =>
   new Date(d).toLocaleDateString(locale === "de" ? "de-AT" : "en-GB", {
@@ -15,13 +29,55 @@ const formatDate = (d: string, locale: string) =>
 const Inner = () => {
   const { lang } = useI18n();
   const de = lang === "de";
-  const [featured, ...rest] = posts;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const title    = (p: typeof posts[0]) => de ? p.title    : p.title_en;
-  const excerpt  = (p: typeof posts[0]) => de ? p.excerpt  : p.excerpt_en;
-  const category = (p: typeof posts[0]) => de ? p.category : p.category_en;
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+    
+    if (!error && data) {
+      setPosts(data);
+    }
+    setLoading(false);
+  };
+
+  const title    = (p: Post) => de ? p.title    : p.title_en;
+  const excerpt  = (p: Post) => de ? p.excerpt  : p.excerpt_en;
+  const category = (p: Post) => de ? p.category : p.category_en;
   const readMore = de ? "Artikel lesen" : "Read article";
   const more     = de ? "Mehr lesen"    : "Read more";
+
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">Loading...</div>;
+  }
+
+  const [featured, ...rest] = posts;
+
+  if (!featured) {
+    return (
+      <main className="bg-background min-h-screen">
+        <SEO
+          title="Blog | SAIDA MagicBox"
+          description="B2B insights for mobile retailers"
+          canonical="https://saidamagicbox.com/blog"
+        />
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-32 text-center">
+          <h1 className="text-4xl font-bold mb-4">No posts yet</h1>
+          <p className="text-muted-foreground">Check back soon for updates!</p>
+        </div>
+        <Footer />
+      </main>
+    );
+  }
 
   return (
     <main className="bg-background min-h-screen">
@@ -86,10 +142,10 @@ const Inner = () => {
                   {category(featured)}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="size-3.5" /> {formatDate(featured.date, lang)}
+                  <Calendar className="size-3.5" /> {formatDate(featured.created_at, lang)}
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Clock className="size-3.5" /> {featured.readTime}
+                  <Clock className="size-3.5" /> {featured.read_time}
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight group-hover:text-primary transition-colors">
@@ -107,48 +163,50 @@ const Inner = () => {
       </section>
 
       {/* Grid */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-32">
-        <div className="grid md:grid-cols-2 gap-6">
-          {rest.map((p) => (
-            <Link
-              key={p.slug}
-              to={`/blog/${p.slug}`}
-              className="group rounded-3xl border bg-card overflow-hidden hover:shadow-elevated hover:-translate-y-1 transition-all duration-500"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={title(p)}
-                  className="size-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-7">
-                <div className="flex items-center gap-3 text-xs text-muted-foreground mb-4 flex-wrap">
-                  <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">
-                    {category(p)}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Calendar className="size-3.5" /> {formatDate(p.date, lang)}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock className="size-3.5" /> {p.readTime}
+      {rest.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pb-32">
+          <div className="grid md:grid-cols-2 gap-6">
+            {rest.map((p) => (
+              <Link
+                key={p.slug}
+                to={`/blog/${p.slug}`}
+                className="group rounded-3xl border bg-card overflow-hidden hover:shadow-elevated hover:-translate-y-1 transition-all duration-500"
+              >
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={p.image}
+                    alt={title(p)}
+                    className="size-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-7">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground mb-4 flex-wrap">
+                    <span className="rounded-full bg-primary/10 text-primary px-2.5 py-1 font-semibold uppercase tracking-wider">
+                      {category(p)}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar className="size-3.5" /> {formatDate(p.created_at, lang)}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Clock className="size-3.5" /> {p.read_time}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-2xl font-semibold leading-snug group-hover:text-primary transition-colors">
+                    {title(p)}
+                  </h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    {excerpt(p)}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                    {more} <ArrowUpRight className="size-3.5" />
                   </span>
                 </div>
-                <h3 className="font-display text-2xl font-semibold leading-snug group-hover:text-primary transition-colors">
-                  {title(p)}
-                </h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                  {excerpt(p)}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  {more} <ArrowUpRight className="size-3.5" />
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <Footer />
       <WhatsAppButton />
