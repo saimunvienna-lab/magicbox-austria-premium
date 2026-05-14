@@ -243,6 +243,48 @@ const Order = () => {
     vat_number: vatNum || undefined, message: message || undefined,
   }).success;
 
+  // ── WhatsApp notification via CallMeBot ──
+  const sendWhatsAppNotification = async (orderData: {
+    shopName: string;
+    city: string;
+    country: string;
+    email: string;
+    phone: string;
+    productLabel: string;
+    grand: number;
+    vatNum: string;
+    isAT: boolean;
+  }) => {
+    const callmebotPhone = import.meta.env.VITE_CALLMEBOT_PHONE;
+    const callmebotApikey = import.meta.env.VITE_CALLMEBOT_APIKEY;
+
+    if (!callmebotPhone || !callmebotApikey) {
+      console.warn("CallMeBot credentials missing");
+      return;
+    }
+
+    const message = `🔔 Neue MagicBox Bestellung
+
+📦 ${orderData.shopName}
+📍 ${orderData.city}, ${orderData.country}
+🌍 ${orderData.isAT ? "🇦🇹 Österreich" : "🇪🇺 EU"}
+📧 ${orderData.email}
+📞 ${orderData.phone}
+${orderData.vatNum ? `🆔 ${orderData.vatNum}` : ""}
+
+💰 ${fmt(orderData.grand)}
+
+Admin: saidamagicbox.com/admin`;
+
+    try {
+      const url = `https://api.callmebot.com/whatsapp.php?phone=${callmebotPhone}&text=${encodeURIComponent(message)}&apikey=${callmebotApikey}`;
+      await fetch(url, { mode: "no-cors" });
+    } catch (error) {
+      console.error("WhatsApp notification failed:", error);
+      // Silent fail — order already saved
+    }
+  };
+
   const handleSubmit = async () => {
     if (!contactValid) {
       toast({ title: de ? "Bitte alle Pflichtfelder ausfüllen" : "Please fill all required fields", variant: "destructive" });
@@ -307,6 +349,19 @@ const Order = () => {
         }),
       });
     } catch { /* silent — order already saved */ }
+
+    // ── WhatsApp notification via CallMeBot ──
+    await sendWhatsAppNotification({
+      shopName,
+      city,
+      country,
+      email,
+      phone,
+      productLabel,
+      grand,
+      vatNum,
+      isAT,
+    });
 
     setSubmitted(true);
     setLoading(false);
