@@ -1,6 +1,6 @@
 import { Shield, Sparkles, Smartphone, Zap, Eye, Droplet } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import techImg from "@/assets/saida-glass-flex.jpg";
+import techImg from "@/assets/saida-glass-flex.webp";
 
 const Technology = () => {
   const { t } = useI18n();
