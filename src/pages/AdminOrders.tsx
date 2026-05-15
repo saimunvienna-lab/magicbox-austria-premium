@@ -159,7 +159,7 @@ const AdminOrders = () => {
 
   const logout = async () => {
     await supabase.auth.signOut();
-    navigate("/admin");
+    navigate("/admin/login");
   };
 
   return (
