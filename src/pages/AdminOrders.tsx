@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  RefreshCw, Download, LogOut, Search, Eye, UserPlus,
+  RefreshCw, Download, LogOut, Search, Eye, UserPlus, Trash2,
   Package, Clock, CheckCircle2, Truck, Euro, Mail, Phone, MapPin
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -125,11 +125,38 @@ const AdminOrders = () => {
   }, [orders]);
 
   const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase.from("orders").update({ status }).eq("id", id);
-    if (error) { toast({ title: "Fehler beim Aktualisieren", variant: "destructive" }); return; }
-    toast({ title: "Status aktualisiert" });
+    const { data, error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", id)
+      .select();
+    if (error) {
+      toast({ title: "Fehler beim Aktualisieren", description: error.message, variant: "destructive" });
+      return;
+    }
+    if (!data || data.length === 0) {
+      toast({
+        title: "Keine Berechtigung",
+        description: "RLS UPDATE-Policy auf 'orders' fehlt. Bitte in Supabase setzen.",
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({ title: "Status aktualisiert", description: "Bestellstatus wurde geändert" });
     setOrders(p => p.map(o => o.id === id ? { ...o, status } : o));
     if (open?.id === id) setOpen({ ...open, status });
+  };
+
+  const deleteOrder = async (id: string) => {
+    if (!confirm("Diese Bestellung wirklich löschen?")) return;
+    const { error } = await supabase.from("orders").delete().eq("id", id);
+    if (error) {
+      toast({ title: "Fehler beim Löschen", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Bestellung gelöscht" });
+    setOrders(p => p.filter(o => o.id !== id));
+    if (open?.id === id) setOpen(null);
   };
 
   const addToCRM = async (o: Order) => {
@@ -402,6 +429,9 @@ const AdminOrders = () => {
                 </select>
                 <Button variant="outline" onClick={() => addToCRM(open)}>
                   <UserPlus className="w-4 h-4 mr-2" /> Add to CRM
+                </Button>
+                <Button variant="outline" onClick={() => deleteOrder(open.id)} className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 ml-auto">
+                  <Trash2 className="w-4 h-4 mr-2" /> Löschen
                 </Button>
               </div>
             </>
