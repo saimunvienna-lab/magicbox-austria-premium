@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -39,7 +38,6 @@ export default function BlogPost() {
 
   const fetchPost = async () => {
     try {
-      // Fetch the current post
       const { data: postData, error: postError } = await supabase
         .from('blog_posts')
         .select('*')
@@ -55,7 +53,6 @@ export default function BlogPost() {
 
       setPost(postData);
 
-      // Fetch related posts (same category, excluding current post)
       const { data: relatedData } = await supabase
         .from('blog_posts')
         .select('*')
@@ -88,7 +85,6 @@ export default function BlogPost() {
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
           <p className="text-white mt-4">Loading...</p>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -109,7 +105,6 @@ export default function BlogPost() {
             {t('blog.backToBlog', 'Zurück zum Blog')}
           </Button>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -125,7 +120,6 @@ export default function BlogPost() {
       <Navbar />
       
       <article className="container mx-auto px-4 pt-24 pb-16 max-w-4xl">
-        {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => navigate('/blog')}
@@ -135,7 +129,6 @@ export default function BlogPost() {
           {t('blog.backToBlog', 'Zurück zum Blog')}
         </Button>
 
-        {/* Hero Image */}
         <div className="relative h-96 rounded-2xl overflow-hidden mb-8 shadow-2xl">
           <img
             src={post.image}
@@ -145,7 +138,6 @@ export default function BlogPost() {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
         </div>
 
-        {/* Article Header */}
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8">
           <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-slate-600">
             <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">
@@ -187,7 +179,6 @@ export default function BlogPost() {
           </div>
         </div>
 
-        {/* Related Posts */}
         {relatedPosts.length > 0 && (
           <div className="mt-16">
             <h2 className="text-3xl font-bold text-white mb-8">
@@ -228,8 +219,6 @@ export default function BlogPost() {
           </div>
         )}
       </article>
-
-      <Footer />
     </div>
   );
 }
