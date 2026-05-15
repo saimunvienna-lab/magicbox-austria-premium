@@ -312,8 +312,6 @@ export default function Contact() {
         </div>
       </main>
 
-      <Footer />
-
       {/* Schema.org ContactPoint */}
       <script type="application/ld+json">
         {JSON.stringify({
