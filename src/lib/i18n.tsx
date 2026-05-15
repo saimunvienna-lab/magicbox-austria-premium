@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import i18next from "i18next";
 
 export type Lang = "en" | "de";
 
@@ -426,6 +427,10 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (typeof document !== "undefined") document.documentElement.lang = lang;
     localStorage.setItem("saida_lang", lang);
+    // Keep react-i18next (used by Blog/Contact pages) in sync with the custom provider.
+    if (i18next.language !== lang) {
+      i18next.changeLanguage(lang);
+    }
   }, [lang]);
   const setLang = (l: Lang) => setLangState(l);
   const t = (k: string) => translations[lang][k] ?? translations.en[k] ?? k;
