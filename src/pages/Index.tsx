@@ -21,6 +21,7 @@ const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
 const Order = lazy(() => import("@/components/sections/Order"));
 const Contact = lazy(() => import("@/components/sections/Contact"));
 const Dealer = lazy(() => import("@/components/sections/Dealer"));
+import Footer from "@/components/Footer";
 
 // Flag — false = hidden | true = visible
 const SHOW_GALLERY = false;
@@ -55,6 +56,7 @@ const Index = () => (
 
       <WhatsAppButton />
       <CookieBanner />
+      <Footer />
     </main>
   </I18nProvider>
 );

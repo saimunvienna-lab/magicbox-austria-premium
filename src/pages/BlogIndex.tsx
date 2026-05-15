@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Footer from "@/components/Footer";
 
 interface BlogPost {
   id: string;
@@ -175,6 +176,7 @@ export default function BlogIndex() {
           </>
         )}
       </main>
+      <Footer />
     </div>
   );
 }

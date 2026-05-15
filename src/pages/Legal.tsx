@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { I18nProvider, useI18n } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
+import Footer from "@/components/Footer";
 
 type LegalKey = "impressum" | "datenschutz" | "agb" | "widerruf" | "cookies";
 
@@ -115,6 +116,7 @@ const Inner = ({ slug }: { slug: LegalKey }) => {
         </div>
         <p className="mt-12 text-xs text-muted-foreground">Last updated: {new Date().toLocaleDateString(lang === "de" ? "de-AT" : "en-GB")}</p>
       </article>
+      <Footer />
     </main>
   );
 };

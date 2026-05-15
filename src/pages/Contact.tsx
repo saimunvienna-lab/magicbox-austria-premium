@@ -7,6 +7,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 import { I18nProvider } from "@/lib/i18n";
+import Footer from "@/components/Footer";
 
 function ContactInner() {
   const { toast } = useToast();
@@ -342,6 +343,7 @@ export default function Contact() {
   return (
     <I18nProvider>
       <ContactInner />
+      <Footer />
     </I18nProvider>
   );
 }
