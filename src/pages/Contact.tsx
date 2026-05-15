@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +8,6 @@ import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
-  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,8 +43,8 @@ export default function Contact() {
       window.open(whatsappUrl, '_blank');
 
       toast({
-        title: t('contact.success', 'Nachricht gesendet!'),
-        description: t('contact.successDesc', 'Wir melden uns innerhalb von 24 Stunden bei Ihnen.'),
+        title: 'Nachricht gesendet!',
+        description: 'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
       });
 
       // Reset form
@@ -54,8 +52,8 @@ export default function Contact() {
     } catch (error) {
       console.error('Error:', error);
       toast({
-        title: t('contact.error', 'Fehler'),
-        description: t('contact.errorDesc', 'Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.'),
+        title: 'Fehler',
+        description: 'Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.',
         variant: "destructive",
       });
     } finally {
@@ -77,14 +75,14 @@ export default function Contact() {
           <ol className="flex items-center gap-2" itemScope itemType="https://schema.org/BreadcrumbList">
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
               <a href="/" itemProp="item" className="hover:text-white transition-colors">
-                <span itemProp="name">{t('nav.home', 'Home')}</span>
+                <span itemProp="name">Home</span>
               </a>
               <meta itemProp="position" content="1" />
             </li>
             <li>/</li>
             <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
               <span itemProp="name" className="text-white font-medium">
-                {t('nav.contact', 'Kontakt')}
+                Kontakt
               </span>
               <meta itemProp="position" content="2" />
             </li>
@@ -96,10 +94,10 @@ export default function Contact() {
         {/* Hero Section */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {t('contact.title', 'Kontakt aufnehmen')}
+            Kontakt aufnehmen
           </h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            {t('contact.subtitle', 'Wir sind für Sie da – per Telefon, E-Mail oder WhatsApp. Antwort innerhalb von 24 Stunden garantiert.')}
+            Wir sind für Sie da – per Telefon, E-Mail oder WhatsApp. Antwort innerhalb von 24 Stunden garantiert.
           </p>
         </div>
 
@@ -114,7 +112,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">
-                    {t('contact.address', 'Adresse')}
+                    Adresse
                   </h3>
                   <p className="text-blue-100">
                     SAIDA MagicBox<br />
@@ -132,7 +130,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">
-                    {t('contact.phone', 'Telefon & WhatsApp')}
+                    Telefon & WhatsApp
                   </h3>
                   <a href="tel:+436769617723" className="text-blue-200 hover:text-white transition-colors block">
                     +43 676 9617723
@@ -157,7 +155,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">
-                    {t('contact.email', 'E-Mail')}
+                    E-Mail
                   </h3>
                   <a href="mailto:office@saidamagicbox.com" className="text-blue-200 hover:text-white transition-colors">
                     office@saidamagicbox.com
@@ -174,11 +172,11 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">
-                    {t('contact.hours', 'Geschäftszeiten')}
+                    Geschäftszeiten
                   </h3>
                   <p className="text-blue-100">
-                    {t('contact.weekdays', 'Montag - Freitag')}: 9:00 - 18:00<br />
-                    {t('contact.weekend', 'Samstag - Sonntag')}: {t('contact.closed', 'Geschlossen')}
+                    Montag - Freitag: 9:00 - 18:00<br />
+                    Samstag - Sonntag: Geschlossen
                   </p>
                 </div>
               </div>
@@ -187,7 +185,7 @@ export default function Contact() {
             {/* Map */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <h3 className="text-xl font-bold text-white mb-4">
-                {t('contact.location', 'Standort')}
+                Standort
               </h3>
               <div className="aspect-video rounded-lg overflow-hidden">
                 <iframe 
@@ -207,12 +205,12 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-2xl p-8">
             <h2 className="text-3xl font-bold text-slate-900 mb-6">
-              {t('contact.formTitle', 'Nachricht senden')}
+              Nachricht senden
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                  {t('contact.name', 'Name')} *
+                  Name *
                 </label>
                 <Input
                   id="name"
@@ -221,14 +219,14 @@ export default function Contact() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder={t('contact.namePlaceholder', 'Ihr Name')}
+                  placeholder="Ihr Name"
                   className="w-full"
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                  {t('contact.emailLabel', 'E-Mail')} *
+                  E-Mail *
                 </label>
                 <Input
                   id="email"
@@ -244,7 +242,7 @@ export default function Contact() {
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
-                  {t('contact.phoneLabel', 'Telefon')}
+                  Telefon
                 </label>
                 <Input
                   id="phone"
@@ -259,7 +257,7 @@ export default function Contact() {
 
               <div>
                 <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-2">
-                  {t('contact.company', 'Firma')}
+                  Firma
                 </label>
                 <Input
                   id="company"
@@ -267,14 +265,14 @@ export default function Contact() {
                   type="text"
                   value={formData.company}
                   onChange={handleChange}
-                  placeholder={t('contact.companyPlaceholder', 'Ihr Handyshop (optional)')}
+                  placeholder="Ihr Handyshop (optional)"
                   className="w-full"
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
-                  {t('contact.messageLabel', 'Nachricht')} *
+                  Nachricht *
                 </label>
                 <Textarea
                   id="message"
@@ -282,7 +280,7 @@ export default function Contact() {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder={t('contact.messagePlaceholder', 'Wie können wir Ihnen helfen?')}
+                  placeholder="Wie können wir Ihnen helfen?"
                   rows={6}
                   className="w-full"
                 />
@@ -295,17 +293,17 @@ export default function Contact() {
                 disabled={loading}
               >
                 {loading ? (
-                  t('contact.sending', 'Wird gesendet...')
+                  'Wird gesendet...'
                 ) : (
                   <>
                     <Send className="w-5 h-5 mr-2" />
-                    {t('contact.send', 'Nachricht senden')}
+                    Nachricht senden
                   </>
                 )}
               </Button>
 
               <p className="text-sm text-slate-500 text-center">
-                {t('contact.privacy', 'Ihre Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.')}
+                Ihre Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.
               </p>
             </form>
           </div>
@@ -318,9 +316,7 @@ export default function Contact() {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": "SAIDA MagicBox",
-          "description": i18n.language === 'de' 
-            ? "Premium B2B-Lagersystem für Panzerglas – Handyshops in Österreich"
-            : "Premium B2B inventory system for tempered glass – Mobile shops in Austria",
+          "description": "Premium B2B-Lagersystem für Panzerglas – Handyshops in Österreich",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Wien",
