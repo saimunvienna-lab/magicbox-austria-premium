@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { I18nProvider } from "@/lib/i18n";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/sections/Hero";
-import Footer from "@/components/sections/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
 import AnnouncementBar from "@/components/AnnouncementBar";
@@ -54,7 +53,6 @@ const Index = () => (
         <Dealer />
       </Suspense>
 
-      <Footer />
       <WhatsAppButton />
       <CookieBanner />
     </main>
