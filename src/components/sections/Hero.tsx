@@ -4,6 +4,7 @@ import { motion, useInView, useReducedMotion, animate } from "framer-motion";
 import { ArrowRight, Play, QrCode, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 import boxFront from "@/assets/saida-box-front.webp";
 import boxFrontMobile from "@/assets/saida-box-front-mobile.webp";
 
@@ -74,6 +75,8 @@ const fadeUp = {
 const Hero = () => {
   const { t, lang } = useI18n();
   const reduced = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lite = reduced || isMobile;
   const [seoLang] = useState(lang);
 
   return (
@@ -89,8 +92,12 @@ const Hero = () => {
 
       {/* Background layers */}
       <div className="absolute inset-0 bg-mesh pointer-events-none" />
-      <div className="hidden sm:block absolute -top-48 -left-32 size-[800px] rounded-full bg-primary/20 blur-3xl pointer-events-none animate-float-slow" />
-      <div className="hidden sm:block absolute -bottom-48 -right-32 size-[600px] rounded-full bg-primary-glow/15 blur-3xl pointer-events-none animate-float" />
+      {!isMobile && (
+        <>
+          <div className="absolute -top-48 -left-32 size-[800px] rounded-full bg-primary/20 blur-3xl pointer-events-none animate-float-slow" />
+          <div className="absolute -bottom-48 -right-32 size-[600px] rounded-full bg-primary-glow/15 blur-3xl pointer-events-none animate-float" />
+        </>
+      )}
       {/* SVG grid */}
       <svg
         aria-hidden
@@ -333,7 +340,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Floating particles */}
-            {!reduced && (
+            {!lite && (
               <div className="hidden sm:block absolute inset-0 pointer-events-none">
                 {[0, 1, 2, 3, 4].map((i) => (
                   <motion.span
