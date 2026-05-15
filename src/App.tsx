@@ -12,12 +12,14 @@ import Order from "./components/sections/Order.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminBlog from "./pages/AdminBlog.tsx";  // ← NEW: Import AdminBlog
 import Contact from "./pages/Contact.tsx";
+import { I18nProvider } from "@/lib/i18n";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <I18nProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
@@ -36,6 +38,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </I18nProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
