@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +65,6 @@ export default function BlogIndex() {
       <Navbar />
       
       <main className="container mx-auto px-4 pt-24 pb-16">
-        {/* Hero Section */}
         <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t('blog.title', 'Insights & News')}
@@ -89,7 +87,6 @@ export default function BlogIndex() {
           </div>
         ) : (
           <>
-            {/* Featured Post */}
             {featuredPost && (
               <div className="mb-16 animate-slide-up">
                 <div className="relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer group"
@@ -133,7 +130,6 @@ export default function BlogIndex() {
               </div>
             )}
 
-            {/* Regular Posts Grid */}
             {regularPosts.length > 0 && (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {regularPosts.map((post, index) => {
@@ -179,8 +175,6 @@ export default function BlogIndex() {
           </>
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }
