@@ -41,7 +41,7 @@ export default function Contact() {
 
       // Send WhatsApp notification
       const whatsappMessage = `🔔 Neue Kontaktanfrage\n\nName: ${formData.name}\nEmail: ${formData.email}\nTelefon: ${formData.phone}\nFirma: ${formData.company}\n\nNachricht:\n${formData.message}`;
-      const whatsappUrl = `https://wa.me/436645486084?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl = `https://wa.me/436769617723?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappUrl, '_blank');
 
       toast({
@@ -134,11 +134,11 @@ export default function Contact() {
                   <h3 className="text-xl font-bold text-white mb-2">
                     {t('contact.phone', 'Telefon & WhatsApp')}
                   </h3>
-                  <a href="tel:+436645486084" className="text-blue-200 hover:text-white transition-colors block">
-                    +43 664 548 6084
+                  <a href="tel:+436769617723" className="text-blue-200 hover:text-white transition-colors block">
+                    +43 676 9617723
                   </a>
                   <a 
-                    href="https://wa.me/436645486084" 
+                    href="https://wa.me/436769617723" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-green-300 hover:text-green-200 transition-colors mt-2 inline-block"
@@ -159,8 +159,8 @@ export default function Contact() {
                   <h3 className="text-xl font-bold text-white mb-2">
                     {t('contact.email', 'E-Mail')}
                   </h3>
-                  <a href="mailto:info@saidamagicbox.com" className="text-blue-200 hover:text-white transition-colors">
-                    info@saidamagicbox.com
+                  <a href="mailto:office@saidamagicbox.com" className="text-blue-200 hover:text-white transition-colors">
+                    office@saidamagicbox.com
                   </a>
                 </div>
               </div>
@@ -328,12 +328,12 @@ export default function Contact() {
           },
           "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+43-664-548-6084",
+            "telephone": "+43-676-9617723",
             "contactType": "customer service",
             "areaServed": "AT",
             "availableLanguage": ["de", "en"]
           },
-          "email": "info@saidamagicbox.com",
+          "email": "office@saidamagicbox.com",
           "url": "https://saidamagicbox.com"
         })}
       </script>
