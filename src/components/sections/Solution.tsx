@@ -1,6 +1,6 @@
 import { Box, Search, TrendingUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import shopImg from "@/assets/saida-system.jpg";
+import shopImg from "@/assets/saida-system.webp";
 
 const Solution = () => {
   const { t } = useI18n();

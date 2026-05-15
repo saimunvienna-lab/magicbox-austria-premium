@@ -1,10 +1,10 @@
 import { useI18n } from "@/lib/i18n";
-import banner from "@/assets/saida-banner.jpg";
-import boxFront from "@/assets/saida-box-front.jpg";
-import system from "@/assets/saida-system.jpg";
-import flex from "@/assets/saida-glass-flex.jpg";
-import detail from "@/assets/saida-box-detail.jpg";
-import qr from "@/assets/qr-scan.jpg";
+import banner from "@/assets/saida-banner.webp";
+import boxFront from "@/assets/saida-box-front.webp";
+import system from "@/assets/saida-system.webp";
+import flex from "@/assets/saida-glass-flex.webp";
+import detail from "@/assets/saida-box-detail.webp";
+import qr from "@/assets/qr-scan.webp";
 
 const Gallery = () => {
   const { t } = useI18n();

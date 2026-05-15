@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import austria from "@/assets/austria.jpg";
+import austria from "@/assets/austria.webp";
 
 const Austria = () => {
   const { t } = useI18n();
