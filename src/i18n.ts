@@ -104,14 +104,21 @@ const resources = {
   },
 };
 
+// Read same storage key used by the custom I18nProvider so both stay in sync.
+const savedLang =
+  (typeof window !== 'undefined' && localStorage.getItem('saida_lang')) || 'de';
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'de',
+    lng: savedLang,
     fallbackLng: 'de',
     interpolation: {
       escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
     },
   });
 
