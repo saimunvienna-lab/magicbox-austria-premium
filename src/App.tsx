@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Order from "./components/sections/Order.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminBlog from "./pages/AdminBlog.tsx";  // ← NEW: Import AdminBlog
+import AdminContacts from "./pages/AdminContacts.tsx";
+import AdminOrders from "./pages/AdminOrders.tsx";
 import Contact from "./pages/Contact.tsx";
 import { I18nProvider } from "@/lib/i18n";
 
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/cookies" element={<Legal slug="cookies" />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/blog" element={<AdminBlog />} />  {/* ← NEW: Admin Blog route */}
+          <Route path="/admin/contacts" element={<AdminContacts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/kontakt" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
