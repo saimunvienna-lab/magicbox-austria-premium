@@ -10,13 +10,18 @@ export default defineConfig({
     },
   },
   build: {
+    minify: "terser",
+    terserOptions: {
+      compress: { drop_console: true, drop_debugger: true },
+    },
     cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
           supabase: ["@supabase/supabase-js"],
           query: ["@tanstack/react-query"],
+          motion: ["framer-motion"],
         },
       },
     },
