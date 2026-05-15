@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Order from "./components/sections/Order.tsx";
 import Admin from "./pages/Admin.tsx";
 import AdminBlog from "./pages/AdminBlog.tsx";  // ← NEW: Import AdminBlog
+import Contact from "./pages/Contact.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/cookies" element={<Legal slug="cookies" />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/blog" element={<AdminBlog />} />  {/* ← NEW: Admin Blog route */}
+          <Route path="/kontakt" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
