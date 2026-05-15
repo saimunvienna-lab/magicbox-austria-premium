@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { motion, useInView, useReducedMotion, animate } from "framer-motion";
-import { Layers, Clock, Wallet, TrendingDown, Zap, TrendingUp, ArrowDown, ArrowUp, ArrowUpRight } from "lucide-react";
+import { Layers, Clock, Wallet, TrendingDown, Zap, TrendingUp, ArrowDown, ArrowUp, ArrowUpRight, Check } from "lucide-react";
 
 import { useI18n } from "@/lib/i18n";
 
@@ -202,36 +202,63 @@ const Problem = () => {
                 <p className="mt-5 text-lg text-muted-foreground max-w-xl">{t("problem_part3_sub")}</p>
               </motion.div>
 
-              <div className="mt-10 space-y-4">
-                {benefits.map((b, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.6, delay: i * 0.12 }}
-                    className="group relative rounded-2xl p-[1px] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-transparent hover:from-primary hover:via-primary-glow/60 transition-all"
-                  >
-                    <div className="relative rounded-[calc(1rem-1px)] bg-card/80 backdrop-blur-xl border border-primary/10 p-6 sm:p-7 shadow-soft hover:-translate-y-1 hover:shadow-elevated transition-all duration-500">
-                      <div className="flex items-start gap-6">
-                        <div className="shrink-0">
-                          <div className="font-display text-5xl sm:text-6xl font-bold leading-none text-gradient">
-                            <CountUp value={b.stat} />
+              <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
+                {benefits.map((b, i) => {
+                  const isPricing = i === 2;
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-60px" }}
+                      transition={{ duration: 0.6, delay: i * 0.12 }}
+                      className="group relative h-full rounded-2xl p-[1px] bg-gradient-to-br from-primary/40 via-primary-glow/30 to-transparent hover:from-primary hover:via-primary-glow/60 transition-all"
+                    >
+                      <div className="relative h-full flex flex-col rounded-[calc(1rem-1px)] bg-card/90 backdrop-blur-xl border border-primary/10 p-6 sm:p-7 shadow-soft hover:-translate-y-1 hover:shadow-elevated transition-all duration-500">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="size-11 rounded-xl bg-gradient-to-br from-primary to-primary-glow grid place-items-center shadow-glow">
+                            <b.icon className="size-5 text-primary-foreground" />
                           </div>
-                          <div className="mt-2 text-[10px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
+                          <div className="text-[10px] uppercase tracking-[0.18em] font-semibold text-muted-foreground text-right">
                             {b.label}
                           </div>
                         </div>
-                        <div className="flex-1">
-                          <h3 className="font-display text-xl font-semibold text-foreground">{b.title}</h3>
-                          <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">{b.desc}</p>
-                        </div>
-                        <ArrowUpRight className="size-5 text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
-                        <b.icon className="size-5 text-primary/70 shrink-0 hidden sm:block" />
+
+                        {isPricing ? (
+                          <>
+                            <h3 className="font-display text-xl font-bold text-foreground text-center">ROI in 30 Tagen</h3>
+                            <div className="mt-3 text-center">
+                              <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">Umsatz pro Box</div>
+                              <div className="mt-1 font-display text-4xl sm:text-5xl font-bold leading-none text-gradient">
+                                €3.050–4.850
+                              </div>
+                            </div>
+                            <ul className="mt-5 space-y-2.5 text-sm text-muted-foreground">
+                              {[
+                                "305 Panzergläser: Standard 0,33mm bei €10–15 / Stk.",
+                                "Plus Ultra-Dünn 0,25mm (Curved-Displays) bei €20 / Stk.",
+                                "= €3.050–4.850 Umsatz aus einer einzigen Box",
+                              ].map((line) => (
+                                <li key={line} className="flex items-start gap-2">
+                                  <Check className="size-4 text-primary shrink-0 mt-0.5" />
+                                  <span className="leading-snug">{line}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </>
+                        ) : (
+                          <>
+                            <div className="font-display text-5xl sm:text-6xl font-bold leading-none text-gradient">
+                              <CountUp value={b.stat} />
+                            </div>
+                            <h3 className="mt-4 font-display text-xl font-semibold text-foreground">{b.title}</h3>
+                            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
+                          </>
+                        )}
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>
