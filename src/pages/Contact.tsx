@@ -6,8 +6,9 @@ import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
+import { I18nProvider } from "@/lib/i18n";
 
-export default function Contact() {
+function ContactInner() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -334,5 +335,13 @@ export default function Contact() {
         })}
       </script>
     </div>
+  );
+}
+
+export default function Contact() {
+  return (
+    <I18nProvider>
+      <ContactInner />
+    </I18nProvider>
   );
 }
