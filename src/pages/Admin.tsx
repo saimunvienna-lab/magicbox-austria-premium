@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, FileText, ShoppingCart, LogOut, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import SEO from "@/components/SEO";
 
 const Admin = () => {
+  const navigate = useNavigate();
   const [contactCount, setContactCount] = useState(0);
   const [todayContacts, setTodayContacts] = useState(0);
   const [postCount, setPostCount] = useState(0);
@@ -35,6 +36,11 @@ const Admin = () => {
     })();
   }, []);
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/admin/login");
+  };
+
   const cards = [
     { icon: Mail, title: "Kontaktanfragen", count: contactCount, label: "neue Anfragen", href: "/admin/contacts", color: "from-blue-500 to-blue-700" },
     { icon: FileText, title: "Blog Beiträge", count: postCount, label: "veröffentlicht", href: "/admin/blog", color: "from-purple-500 to-purple-700" },
@@ -50,9 +56,9 @@ const Admin = () => {
             <div className="size-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 grid place-items-center font-bold">S</div>
             <span className="font-bold tracking-tight">SAIDA Admin</span>
           </Link>
-          <Link to="/" className="flex items-center gap-2 text-sm text-blue-200 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition">
+          <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-blue-200 hover:text-white px-3 py-2 rounded-lg hover:bg-white/5 transition">
             <LogOut className="w-4 h-4" /> Logout
-          </Link>
+          </button>
         </div>
       </header>
       <main className="max-w-7xl mx-auto px-6 py-12">
