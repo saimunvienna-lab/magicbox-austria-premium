@@ -185,7 +185,7 @@ const Order = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const [isAT, setIsAT]             = useState(true);
-  const [product, setProduct]       = useState<"starter" | "custom">("starter");
+  const [product, setProduct]       = useState<"starter" | "full" | "custom">("starter");
   const [starterQty, setStarterQty] = useState(1);
   const [showExtra, setShowExtra]   = useState(false);
   const [extraK, setExtraK]         = useState<KSel>({});
@@ -203,11 +203,17 @@ const Order = () => {
   const [message, setMessage]         = useState("");
   const vatTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const starterNet    = STARTER_NET * starterQty;
+  const boxIsStarter  = product === "starter";
+  const boxIsFull     = product === "full";
+  const boxUnit       = boxIsFull ? FULL_NET : STARTER_NET;
+  const boxName       = boxIsFull ? "Full Box" : "Starter Box";
+  const boxDrawers    = boxIsFull ? 66 : 61;
+  const boxGlasses    = boxIsFull ? 330 : 305;
+  const starterNet    = boxUnit * starterQty;
   const extraNet      = Object.entries(extraK).reduce((a, [k, q]) => a + up(k) * q, 0);
   const starterTotNet = starterNet + extraNet;
   const customNet     = Object.entries(customK).reduce((a, [k, q]) => a + up(k) * q, 0);
-  const activeNet     = product === "starter" ? starterTotNet : customNet;
+  const activeNet     = (boxIsStarter || boxIsFull) ? starterTotNet : customNet;
   const vat           = isAT ? activeNet * VAT_RATE : 0;
   const grand         = activeNet + vat;
 
