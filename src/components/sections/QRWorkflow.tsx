@@ -115,7 +115,7 @@ const QRWorkflow = () => {
             {/* LEFT: PHOTO */}
             <div className="relative">
               <div className="absolute -top-5 -right-4 z-20 hidden sm:flex items-center gap-4 bg-background/95 backdrop-blur-sm border border-border rounded-2xl px-5 py-3.5 shadow-xl">
-                <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">2086</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_models")}</p></div>
+                <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">{DB.length || 2131}</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_models")}</p></div>
                 <div className="w-px h-9 bg-border" />
                 <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">48+</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_brands")}</p></div>
                 <div className="w-px h-9 bg-border" />
