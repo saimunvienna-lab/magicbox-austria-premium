@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Was kostet eine MagicBox und was ist enthalten?",
-    a: "Die MagicBox startet ab €540 (netto, B2B-Preis). Jede Box enthält 305 Stück Panzerglas in 60+ Varianten: ~240 Stück Standard 0,33mm für flache Displays und ~65 Stück Ultra-Dünn 0,25mm für Curved-Displays und Smartphones mit sensiblem In-Display-Fingerprint-Sensor. Bei einem Verkaufspreis von €10–20 pro Stück liegt der mögliche Umsatz pro Box bei €3.050–4.850 — das entspricht einer Marge von 500–800%.",
+    a: "Die MagicBox startet ab €399,90 (netto, B2B-Preis). Jede Box enthält 305 Stück Panzerglas in 61 Varianten: ~240 Stück Standard 0,33mm für flache Displays und ~65 Stück Ultra-Dünn 0,25mm für Curved-Displays und Smartphones mit sensiblem In-Display-Fingerprint-Sensor.\n\nOptional können 5 zusätzliche Schubladen hinzugefügt werden (66 Schubladen / 330 Stück gesamt).\n\nBei einem Verkaufspreis von €10–20 pro Stück liegt der mögliche Umsatz pro Box bei €3.050–6.600 — das entspricht einer Marge von 650–1.550%.",
   },
   {
     q: "Wodurch unterscheidet sich MagicBox von einem Folien-Schneideplotter?",
@@ -82,7 +82,7 @@ const FAQ = () => {
               <AccordionTrigger className="text-left font-semibold text-lg text-foreground px-4 py-5 hover:no-underline">
                 {f.q}
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-5 text-base text-muted-foreground leading-relaxed">
+              <AccordionContent className="px-4 pb-5 text-base text-muted-foreground leading-relaxed whitespace-pre-line">
                 {f.a}
               </AccordionContent>
             </AccordionItem>

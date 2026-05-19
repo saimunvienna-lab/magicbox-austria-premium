@@ -2,109 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { Search, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-const DB = [
-  {"b":"Apple","m":"iPhone X","k":"K01"},{"b":"Apple","m":"iPhone XS","k":"K01"},{"b":"Apple","m":"iPhone 11 Pro","k":"K01"},
-  {"b":"Apple","m":"iPhone 11","k":"K02"},{"b":"Apple","m":"iPhone XR","k":"K02"},
-  {"b":"Apple","m":"iPhone 11 Pro Max","k":"K03"},{"b":"Apple","m":"iPhone XS Max","k":"K03"},
-  {"b":"Apple","m":"iPhone 12","k":"K04"},{"b":"Apple","m":"iPhone 12 Pro","k":"K04"},
-  {"b":"Apple","m":"iPhone 12 Pro Max","k":"K05"},
-  {"b":"Apple","m":"iPhone 13","k":"K06"},{"b":"Apple","m":"iPhone 13 Pro","k":"K06"},{"b":"Apple","m":"iPhone 14","k":"K06"},{"b":"Apple","m":"iPhone 16E","k":"K06"},
-  {"b":"Apple","m":"iPhone 13 Pro Max","k":"K07"},{"b":"Apple","m":"iPhone 14 Plus","k":"K07"},
-  {"b":"Apple","m":"iPhone 14 Pro","k":"K08"},{"b":"Apple","m":"iPhone 15","k":"K08"},{"b":"Apple","m":"iPhone 16","k":"K08"},
-  {"b":"Apple","m":"iPhone 14 Pro Max","k":"K09"},{"b":"Apple","m":"iPhone 15 Plus","k":"K09"},{"b":"Apple","m":"iPhone 16 Plus","k":"K09"},
-  {"b":"Apple","m":"iPhone 15 Pro","k":"K10"},{"b":"Apple","m":"iPhone 15 Pro Max","k":"K11"},
-  {"b":"Apple","m":"iPhone 16 Pro","k":"K12"},{"b":"Apple","m":"iPhone 17","k":"K12"},{"b":"Apple","m":"iPhone 17 PRO","k":"K12"},
-  {"b":"Apple","m":"iPhone 16 Pro Max","k":"K13"},{"b":"Apple","m":"iPhone 17 PRO MAX","k":"K13"},
-  {"b":"Apple","m":"iPhone 17 AIR","k":"K13-1"},
-  {"b":"Samsung","m":"Samsung Galaxy S21 5G","k":"K14+"},
-  {"b":"Google","m":"Google Pixel 7a","k":"K14+"},{"b":"Google","m":"Google Pixel 9","k":"K14+"},{"b":"Google","m":"Google Pixel 9 PRO","k":"K14+"},
-  {"b":"Samsung","m":"Samsung Galaxy A24 4G","k":"K15+"},{"b":"Samsung","m":"Samsung Galaxy A25","k":"K15+"},{"b":"Samsung","m":"Samsung Galaxy S21+ 5G","k":"K15+"},{"b":"Samsung","m":"Samsung Galaxy M31s","k":"K15+"},
-  {"b":"Vivo","m":"vivo T2","k":"K15+"},{"b":"Oppo","m":"Oppo A54","k":"K15+"},{"b":"Huawei","m":"Huawei Y9s","k":"K15+"},{"b":"Redmi","m":"Redmi Note 9 5G","k":"K15+"},{"b":"Nothing Phone","m":"Nothing Phone (1)","k":"K15+"},
-  {"b":"Samsung","m":"Samsung Galaxy S23","k":"K16+"},{"b":"Samsung","m":"Samsung Galaxy S22 5G","k":"K16+"},{"b":"LG","m":"LG K31","k":"K16+"},{"b":"Tecno","m":"Tecno Pop 5S","k":"K16+"},
-  {"b":"Samsung","m":"Samsung Galaxy S23 FE","k":"K17+"},{"b":"Samsung","m":"Samsung Galaxy S23+","k":"K17+"},{"b":"Samsung","m":"Samsung Galaxy S22+ 5G","k":"K17+"},{"b":"Samsung","m":"Samsung Galaxy A54","k":"K17+"},{"b":"Meizu","m":"Meizu 21","k":"K17+"},{"b":"Meizu","m":"Meizu 20","k":"K17+"},{"b":"Huawei","m":"HUAWEI PURA 80","k":"K17+"},
-  {"b":"Samsung","m":"Samsung Galaxy S24","k":"K18+"},{"b":"Huawei","m":"Huawei P30","k":"K18+"},{"b":"Huawei","m":"Huawei P40","k":"K18+"},
-  {"b":"Samsung","m":"Samsung Galaxy S24+","k":"K19+"},{"b":"Samsung","m":"Samsung Galaxy M15","k":"K19+"},{"b":"Samsung","m":"Samsung Galaxy A15","k":"K19+"},{"b":"Honor","m":"Honor 8X","k":"K19+"},{"b":"LG","m":"LG Q60","k":"K19+"},
-  {"b":"Samsung","m":"Samsung Galaxy S24 Ultra","k":"K20+"},
-  {"b":"Vivo","m":"vivo Y77e","k":"K21"},{"b":"Vivo","m":"vivo Y35","k":"K21"},{"b":"Vivo","m":"vivo Y22","k":"K21"},{"b":"Vivo","m":"vivo Y21","k":"K21"},{"b":"Vivo","m":"vivo Y20","k":"K21"},{"b":"Vivo","m":"vivo Y16","k":"K21"},{"b":"Vivo","m":"vivo iQOO Z6","k":"K21"},
-  {"b":"Oppo","m":"Oppo A16s","k":"K21"},{"b":"Oppo","m":"Oppo A15","k":"K21"},{"b":"Oppo","m":"Oppo A38","k":"K21"},{"b":"Oppo","m":"Oppo A57","k":"K21"},{"b":"Oppo","m":"Oppo A78","k":"K21"},{"b":"Oppo","m":"Oppo A9 (2020)","k":"K21"},
-  {"b":"Redmi","m":"Redmi A2","k":"K21"},{"b":"Redmi","m":"Redmi A1","k":"K21"},{"b":"Redmi","m":"Redmi 10A","k":"K21"},{"b":"Redmi","m":"Redmi 9C","k":"K21"},{"b":"Redmi","m":"Redmi 9A","k":"K21"},
-  {"b":"Realme","m":"Realme C15","k":"K21"},{"b":"Realme","m":"Realme C3","k":"K21"},{"b":"Realme","m":"Realme C25","k":"K21"},{"b":"Realme","m":"Realme C30","k":"K21"},{"b":"Realme","m":"Realme 5","k":"K21"},{"b":"Realme","m":"Realme Narzo 50A","k":"K21"},
-  {"b":"Samsung","m":"Samsung Galaxy A70","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy M33","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A42 5G","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A23","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A13","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A12","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A04","k":"K21"},{"b":"Samsung","m":"Samsung Galaxy A03","k":"K21"},
-  {"b":"Nokia","m":"Nokia G22","k":"K21"},{"b":"Nokia","m":"Nokia G21","k":"K21"},{"b":"Nokia","m":"Nokia G11","k":"K21"},
-  {"b":"Honor","m":"Honor X8 5G","k":"K21"},{"b":"Honor","m":"Honor X6","k":"K21"},{"b":"Honor","m":"Honor X5","k":"K21"},
-  {"b":"Xiaomi","m":"Xiaomi Poco M4 5G","k":"K21"},{"b":"Xiaomi","m":"Xiaomi Poco M5","k":"K21"},{"b":"Xiaomi","m":"Xiaomi Poco C51","k":"K21"},
-  {"b":"OnePlus","m":"OnePlus Nord N300","k":"K21"},
-  {"b":"Motorola","m":"Motorola Moto G20","k":"K21"},{"b":"Motorola","m":"Motorola Moto G50","k":"K21"},{"b":"Motorola","m":"Motorola Moto E13","k":"K21"},
-  {"b":"Tecno","m":"Tecno Spark 10","k":"K21"},{"b":"Tecno","m":"Tecno Spark 8","k":"K21"},{"b":"Tecno","m":"Tecno Pop 7","k":"K21"},
-  {"b":"Infinix","m":"Infinix Note 12","k":"K21"},{"b":"Infinix","m":"Infinix Hot 11","k":"K21"},{"b":"Huawei","m":"Huawei nova Y61","k":"K21"},
-  {"b":"Vivo","m":"vivo Y100 4G","k":"K22"},{"b":"Vivo","m":"vivo T3","k":"K22"},{"b":"Vivo","m":"vivo iQOO Z9","k":"K22"},{"b":"Vivo","m":"vivo Y200e","k":"K22"},
-  {"b":"Oppo","m":"Oppo A80","k":"K22"},{"b":"Oppo","m":"Oppo Reno12 F","k":"K22"},{"b":"Oppo","m":"Oppo A53","k":"K22"},
-  {"b":"Redmi","m":"Redmi Note 12 Pro+","k":"K22"},{"b":"Redmi","m":"Redmi Note 11 Pro","k":"K22"},{"b":"Redmi","m":"Redmi Note 10 Pro","k":"K22"},{"b":"Redmi","m":"Redmi K60 Pro","k":"K22"},{"b":"Redmi","m":"Redmi Note 13 4G","k":"K22"},
-  {"b":"Realme","m":"Realme GT3","k":"K22"},{"b":"Realme","m":"Realme GT2","k":"K22"},{"b":"Realme","m":"Realme Narzo 70","k":"K22"},
-  {"b":"Samsung","m":"Samsung Galaxy Note20","k":"K22"},{"b":"Samsung","m":"Samsung Galaxy F52 5G","k":"K22"},
-  {"b":"Xiaomi","m":"Xiaomi Poco X5 Pro","k":"K22"},{"b":"Xiaomi","m":"Xiaomi Poco F5","k":"K22"},{"b":"Xiaomi","m":"Xiaomi Poco F3","k":"K22"},{"b":"Xiaomi","m":"Xiaomi 13T Pro","k":"K22"},{"b":"Xiaomi","m":"Xiaomi Poco X6","k":"K22"},
-  {"b":"Nothing Phone","m":"Nothing Phone (2)","k":"K22"},{"b":"OnePlus","m":"OnePlus 10T","k":"K22"},{"b":"Motorola","m":"Motorola Edge 20","k":"K22"},
-  {"b":"Tecno","m":"Tecno Spark 20","k":"K22"},{"b":"Infinix","m":"Infinix GT 10 Pro","k":"K22"},{"b":"Honor","m":"Honor 90 Lite","k":"K22"},
-  {"b":"Vivo","m":"vivo S19","k":"K23"},{"b":"Vivo","m":"vivo iQOO 12","k":"K23"},{"b":"Vivo","m":"vivo Y27","k":"K23"},
-  {"b":"Oppo","m":"Oppo A96","k":"K23"},{"b":"Oppo","m":"Oppo K10","k":"K23"},
-  {"b":"Redmi","m":"Redmi Note 12","k":"K23"},{"b":"Redmi","m":"Redmi Note 9 Pro","k":"K23"},{"b":"Redmi","m":"Redmi K60 Ultra","k":"K23"},
-  {"b":"Realme","m":"Realme GT5","k":"K23"},{"b":"Realme","m":"Realme 12+","k":"K23"},{"b":"Realme","m":"Realme C65","k":"K23"},
-  {"b":"Samsung","m":"Samsung Galaxy M55","k":"K23"},{"b":"Samsung","m":"Samsung Galaxy A71","k":"K23"},{"b":"Samsung","m":"Samsung Galaxy Note10 Lite","k":"K23"},
-  {"b":"Xiaomi","m":"Xiaomi Poco X4 Pro 5G","k":"K23"},{"b":"Xiaomi","m":"Xiaomi 11T","k":"K23"},
-  {"b":"OnePlus","m":"OnePlus Nord 4","k":"K23"},{"b":"Motorola","m":"Motorola Moto G35","k":"K23"},
-  {"b":"Tecno","m":"Tecno Pova 6 Pro","k":"K23"},{"b":"Infinix","m":"Infinix Note 40","k":"K23"},{"b":"Asus","m":"Asus Zenfone 11 Ultra","k":"K23"},
-  {"b":"Vivo","m":"vivo Y300i","k":"K24"},{"b":"Vivo","m":"vivo Y58","k":"K24"},{"b":"Vivo","m":"vivo iQOO 11","k":"K24"},
-  {"b":"Oppo","m":"Oppo A3","k":"K24"},{"b":"Oppo","m":"Oppo A60","k":"K24"},{"b":"Oppo","m":"Oppo A79","k":"K24"},{"b":"Oppo","m":"Oppo F23","k":"K24"},
-  {"b":"Redmi","m":"Redmi Note 12 4G","k":"K24"},
-  {"b":"Realme","m":"Realme 13","k":"K24"},{"b":"Realme","m":"Realme 12","k":"K24"},{"b":"Realme","m":"Realme C55","k":"K24"},{"b":"Realme","m":"Realme 11","k":"K24"},
-  {"b":"Samsung","m":"Samsung Galaxy A80","k":"K24"},{"b":"Samsung","m":"Samsung Galaxy A05s","k":"K24"},{"b":"Samsung","m":"Samsung Galaxy M54","k":"K24"},{"b":"Samsung","m":"Samsung Galaxy M51","k":"K24"},{"b":"Samsung","m":"Samsung Galaxy A72","k":"K24"},
-  {"b":"Xiaomi","m":"Xiaomi Poco X5","k":"K24"},{"b":"Xiaomi","m":"Xiaomi Poco X3 Pro","k":"K24"},{"b":"Xiaomi","m":"Xiaomi Poco X3 NFC","k":"K24"},
-  {"b":"Meizu","m":"Meizu 20 Pro","k":"K24"},{"b":"Tecno","m":"Tecno Camon 30","k":"K24"},{"b":"Tecno","m":"Tecno Pova 6","k":"K24"},{"b":"Honor","m":"Honor X9","k":"K24"},
-  {"b":"Xiaomi","m":"Xiaomi 14 Civi","k":"K25"},{"b":"OnePlus","m":"OnePlus Nord 2T","k":"K25"},
-  {"b":"Realme","m":"Realme 9 Pro+","k":"K25"},{"b":"Realme","m":"Realme 8 Pro","k":"K25"},{"b":"Realme","m":"Realme 8","k":"K25"},
-  {"b":"Oppo","m":"Oppo Reno8","k":"K25"},{"b":"Oppo","m":"Oppo A95","k":"K25"},
-  {"b":"OnePlus","m":"OnePlus Nord","k":"K25"},{"b":"Google","m":"Google Pixel 6","k":"K25"},
-  {"b":"Redmi","m":"Redmi Note 10S","k":"K25"},{"b":"Redmi","m":"Redmi Note 10","k":"K25"},{"b":"Vivo","m":"vivo V20 Pro","k":"K25"},
-  {"b":"Samsung","m":"Samsung Galaxy A14","k":"K26"},{"b":"Samsung","m":"Samsung Galaxy M14","k":"K26"},
-  {"b":"Redmi","m":"Redmi A3","k":"K26"},{"b":"Redmi","m":"Redmi 12C","k":"K26"},{"b":"Xiaomi","m":"Xiaomi Poco C40","k":"K26"},
-  {"b":"Samsung","m":"Samsung Galaxy A50s","k":"K27"},{"b":"Samsung","m":"Samsung Galaxy M31","k":"K27"},{"b":"Samsung","m":"Samsung Galaxy A32","k":"K27"},{"b":"Samsung","m":"Samsung Galaxy A22","k":"K27"},{"b":"Samsung","m":"Samsung Galaxy A20","k":"K27"},
-  {"b":"Vivo","m":"vivo V21","k":"K27"},{"b":"Redmi","m":"Redmi Note 8 Pro","k":"K27"},{"b":"Redmi","m":"Redmi Note 7","k":"K27"},
-  {"b":"Samsung","m":"Samsung Galaxy A34","k":"K28"},{"b":"Samsung","m":"Samsung Galaxy M34 5G","k":"K28"},
-  {"b":"Redmi","m":"Redmi 13","k":"K29"},{"b":"Redmi","m":"Redmi 12","k":"K29"},{"b":"Redmi","m":"Redmi 13C","k":"K29"},
-  {"b":"Realme","m":"Realme C53","k":"K29"},{"b":"Samsung","m":"Samsung Galaxy A05","k":"K29"},{"b":"Infinix","m":"Infinix Hot 40","k":"K29"},{"b":"Honor","m":"Honor X7","k":"K29"},
-  {"b":"Motorola","m":"Motorola Moto G51 5G","k":"K29"},{"b":"Tecno","m":"Tecno Pova 7 5G","k":"K29"},
-  {"b":"Samsung","m":"Samsung Galaxy S20 FE","k":"K30"},{"b":"Samsung","m":"Samsung Galaxy A53 5G","k":"K30"},{"b":"Samsung","m":"Samsung Galaxy A52","k":"K30"},{"b":"Samsung","m":"Samsung Galaxy A51","k":"K30"},
-  {"b":"Redmi","m":"Redmi Note 11","k":"K30"},{"b":"Xiaomi","m":"Xiaomi Poco M4 Pro","k":"K30"},{"b":"Tecno","m":"Tecno Pova 3","k":"K31"},
-  {"b":"Samsung","m":"Samsung Galaxy F41","k":"K32"},{"b":"OnePlus","m":"OnePlus 9","k":"K32"},{"b":"OnePlus","m":"OnePlus 8T","k":"K32"},
-  {"b":"Motorola","m":"Motorola Moto G84","k":"K32"},{"b":"Motorola","m":"Motorola Moto G72","k":"K32"},{"b":"Motorola","m":"Motorola Moto G55","k":"K32"},
-  {"b":"Samsung","m":"Samsung Galaxy A55","k":"K33"},{"b":"Samsung","m":"Samsung Galaxy A35","k":"K33"},{"b":"Samsung","m":"Samsung Galaxy M35","k":"K33"},
-  {"b":"Google","m":"Google Pixel 8 Pro","k":"K33"},{"b":"Xiaomi","m":"Xiaomi 12T Pro","k":"K33"},
-  {"b":"Vivo","m":"vivo V20","k":"K34"},{"b":"OnePlus","m":"OnePlus 7T","k":"K34"},{"b":"HMD","m":"HMD Skyline","k":"K34"},
-  {"b":"Samsung","m":"Samsung Galaxy S21 FE 5G","k":"K35"},{"b":"Google","m":"Google Pixel 7","k":"K35"},
-  {"b":"Realme","m":"Realme Narzo 50","k":"K36"},{"b":"Motorola","m":"Motorola Moto G04","k":"K36"},{"b":"Motorola","m":"Motorola Moto G34","k":"K36"},{"b":"Motorola","m":"Motorola Moto G53","k":"K36"},{"b":"Infinix","m":"Infinix Smart 8","k":"K36"},
-  {"b":"Xiaomi","m":"Xiaomi Mi 11 Lite 5G","k":"K37"},{"b":"Vivo","m":"vivo X60","k":"K37"},
-  {"b":"Xiaomi","m":"Xiaomi Poco M3 Pro","k":"K38"},{"b":"Realme","m":"Realme 6","k":"K38"},{"b":"Motorola","m":"Motorola Moto G64","k":"K38"},
-  {"b":"Samsung","m":"Samsung Galaxy A56","k":"K43"},{"b":"Samsung","m":"Samsung Galaxy A36","k":"K43"},{"b":"Samsung","m":"Samsung Galaxy A26","k":"K43"},
-  {"b":"Nothing Phone","m":"Nothing Phone (3a)","k":"K43"},{"b":"Nothing Phone","m":"Nothing Phone (3a)Pro","k":"K43"},
-  {"b":"Huawei","m":"Huawei Mate 60","k":"K43"},{"b":"Tecno","m":"Tecno Spark 40","k":"K43"},
-  {"b":"Xiaomi","m":"Xiaomi 14","k":"K44"},{"b":"Google","m":"Google Pixel 4a 5G","k":"K44"},{"b":"Motorola","m":"Motorola Edge 50 Neo","k":"K44"},
-  {"b":"Google","m":"Google Pixel 9 Pro XL","k":"K45"},{"b":"Nothing Phone","m":"Nothing Phone (2a)","k":"K45"},{"b":"Huawei","m":"Huawei nova 12","k":"K45"},
-  {"b":"Redmi","m":"Redmi Note 13 Pro","k":"K46"},{"b":"Redmi","m":"Redmi K70 Ultra","k":"K46"},{"b":"Redmi","m":"Redmi K70 Pro","k":"K46"},
-  {"b":"Xiaomi","m":"Xiaomi Poco X6 Pro","k":"K46"},{"b":"Xiaomi","m":"Xiaomi Poco F6","k":"K46"},{"b":"Xiaomi","m":"Xiaomi 13T","k":"K46"},{"b":"Realme","m":"Realme 13+","k":"K46"},
-  {"b":"Motorola","m":"Motorola Moto G54","k":"K51"},{"b":"Motorola","m":"Motorola Moto G73","k":"K51"},
-  {"b":"Asus","m":"Asus ROG Phone 7","k":"K54"},{"b":"Asus","m":"Asus ROG Phone 6","k":"K54"},
-  {"b":"Samsung","m":"Samsung Galaxy S25 Ultra","k":"K55+"},{"b":"Samsung","m":"Samsung S25 EDGE","k":"K56+"},{"b":"Redmi","m":"Redmi 15 5G","k":"K57"},
-  {"b":"Samsung","m":"S26","k":"K59+"},{"b":"Samsung","m":"S26 ULTRA","k":"K60+"},
-  {"b":"Huawei","m":"Huawei Nova 14 5G","k":"K61"},{"b":"Oppo","m":"Oppo Reno 14F","k":"K62+"},
-  {"b":"Vivo","m":"Vivo X300 Pro","k":"K63+"},{"b":"Vivo","m":"Vivo iqoo 15","k":"K64+"},{"b":"Honor","m":"Honor X6C","k":"K64+"},{"b":"Motorola","m":"Motorola Moto G67 Power","k":"K64+"},
-  {"b":"Redmi","m":"Redmi K80 Ultra","k":"K65+"},{"b":"Xiaomi","m":"Xiaomi Poco F7","k":"K65+"},{"b":"Xiaomi","m":"Xiaomi 15T Pro","k":"K65+"},{"b":"Xiaomi","m":"Xiaomi 15T","k":"K65+"},
-];
-
 type Model = { b: string; m: string; k: string };
 
 const BRANDS = [
-  "Apple","Samsung","Xiaomi","Redmi","Realme","Oppo","Vivo",
-  "OnePlus","Motorola","Huawei","Honor","Google","Nokia","Nothing Phone","Infinix","Tecno",
+  "Vivo","Oppo","Realme","Samsung","Redmi","Motorola","Tecno","Xiaomi","Infinix",
+  "Huawei","Honor","OnePlus","Nokia","Apple","Google","Nothing Phone",
 ];
 
 function hl(text: string, q: string) {
@@ -137,7 +39,17 @@ const QRWorkflow = () => {
   const [query, setQuery]           = useState("");
   const [brand, setBrand]           = useState("");
   const [selected, setSelected]     = useState<Model | null>(null);
+  const [DB, setDB]                 = useState<Model[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    fetch("/phone-models.json")
+      .then((r) => r.json())
+      .then((rows: Array<{ brand: string; model: string; k_series: string }>) => {
+        setDB(rows.map((r) => ({ b: r.brand, m: r.model, k: r.k_series })));
+      })
+      .catch(() => setDB([]));
+  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -203,7 +115,7 @@ const QRWorkflow = () => {
             {/* LEFT: PHOTO */}
             <div className="relative">
               <div className="absolute -top-5 -right-4 z-20 hidden sm:flex items-center gap-4 bg-background/95 backdrop-blur-sm border border-border rounded-2xl px-5 py-3.5 shadow-xl">
-                <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">2086</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_models")}</p></div>
+                <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">{DB.length || 2131}</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_models")}</p></div>
                 <div className="w-px h-9 bg-border" />
                 <div className="text-center"><p className="text-2xl font-bold text-primary leading-none">48+</p><p className="text-xs text-muted-foreground mt-0.5">{t("qr_stat_brands")}</p></div>
                 <div className="w-px h-9 bg-border" />

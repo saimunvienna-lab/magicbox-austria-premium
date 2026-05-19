@@ -44,14 +44,15 @@ const jsonLd = {
   ],
 };
 
-const CountUp = ({ to, suffix = "", duration = 1.5 }: { to: number; suffix?: string; duration?: number }) => {
+const CountUp = ({ to, suffix = "", duration = 1.5, decimals = 0 }: { to: number; suffix?: string; duration?: number; decimals?: number }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const reduced = useReducedMotion();
   useEffect(() => {
     if (!ref.current) return;
+    const fmt = (n: number) => n.toLocaleString("de-AT", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     if (reduced) {
-      ref.current.textContent = to.toLocaleString("de-AT") + suffix;
+      ref.current.textContent = fmt(to) + suffix;
       return;
     }
     if (!inView) return;
@@ -59,12 +60,12 @@ const CountUp = ({ to, suffix = "", duration = 1.5 }: { to: number; suffix?: str
       duration,
       ease: "easeOut",
       onUpdate: (v) => {
-        if (ref.current) ref.current.textContent = Math.round(v).toLocaleString("de-AT") + suffix;
+        if (ref.current) ref.current.textContent = fmt(decimals ? v : Math.round(v)) + suffix;
       },
     });
     return () => controls.stop();
-  }, [inView, to, suffix, duration, reduced]);
-  return <span ref={ref}>0{suffix}</span>;
+  }, [inView, to, suffix, duration, reduced, decimals]);
+  return <span ref={ref}>{(0).toLocaleString("de-AT", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}</span>;
 };
 
 const fadeUp = {
@@ -177,12 +178,12 @@ const Hero = () => {
               {[
                 { v: 2000, s: "+", l: t("hero_stat1_l") },
                 { v: 48, s: "+", l: t("hero_stat2_l") },
-                { v: 305, s: "", l: t("hero_stat3_l") },
-                { v: 1, s: " m²", l: t("hero_stat4_l") },
+                { v: 330, s: "", l: t("hero_stat3_l") },
+                { v: 0.5, s: " m²", l: t("hero_stat4_l"), d: 1 },
               ].map((stat, i) => (
                 <div key={i} className="sm:px-5 first:sm:pl-0 text-center sm:text-left">
                   <div className="font-display text-3xl sm:text-4xl font-bold text-gradient leading-none">
-                    <CountUp to={stat.v} suffix={stat.s} />
+                    <CountUp to={stat.v} suffix={stat.s} decimals={(stat as any).d || 0} />
                   </div>
                   <div className="mt-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
                     {stat.l}
@@ -328,7 +329,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={reduced ? { opacity: 1 } : { opacity: 1, y: [0, -6, 0] }}
               transition={{ opacity: { duration: 0.6, delay: 1.1 }, y: { repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 } }}
-              className="absolute -bottom-4 right-2 sm:right-6 rounded-2xl p-[1px] bg-gradient-to-br from-primary via-primary-glow to-accent shadow-elevated"
+              className="absolute -bottom-10 right-2 sm:right-6 rounded-2xl p-[1px] bg-gradient-to-br from-primary via-primary-glow to-accent shadow-elevated"
             >
               <div className="rounded-[calc(1rem-1px)] bg-card/95 backdrop-blur-xl px-4 py-3 flex items-center gap-2.5">
                 <Package className="size-4 text-primary" />

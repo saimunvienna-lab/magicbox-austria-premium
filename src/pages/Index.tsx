@@ -16,7 +16,6 @@ const Comparison = lazy(() => import("@/components/sections/Comparison"));
 const FAQ = lazy(() => import("@/components/sections/FAQ"));
 const Gallery = lazy(() => import("@/components/sections/Gallery"));
 const Austria = lazy(() => import("@/components/sections/Austria"));
-const Blog = lazy(() => import("@/components/sections/Blog"));
 const Testimonials = lazy(() => import("@/components/sections/Testimonials"));
 const Order = lazy(() => import("@/components/sections/Order"));
 const Contact = lazy(() => import("@/components/sections/Contact"));
@@ -47,7 +46,6 @@ const Index = () => (
         <QRWorkflow />
         {SHOW_GALLERY && <Gallery />}
         <Austria />
-        <Blog />
         <FAQ />
         {SHOW_TESTIMONIALS && <Testimonials />}
         <Contact />
