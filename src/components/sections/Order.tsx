@@ -244,7 +244,7 @@ const Order = () => {
     if (v.trim().length > 4) vatTimer.current = setTimeout(() => checkVat(v.trim()), 900);
   };
 
-  const canContinueStep0 = product === "starter" || (product === "custom" && Object.keys(customK).length > 0);
+  const canContinueStep0 = product === "starter" || product === "full" || (product === "custom" && Object.keys(customK).length > 0);
   const contactValid = contactSchema.safeParse({
     shop_name: shopName, contact_name: contactName, email, phone, city, country,
     vat_number: vatNum || undefined, message: message || undefined,
@@ -303,15 +303,15 @@ Admin: saidamagicbox.com/admin`;
     }
     setLoading(true);
 
-    const items = product === "starter"
+    const items = (product === "starter" || product === "full")
       ? [
-          { type: "starter_box", qty: starterQty, unit_price: STARTER_NET },
+          { type: product === "full" ? "full_box" : "starter_box", qty: starterQty, unit_price: boxUnit },
           ...Object.entries(extraK).map(([k, q]) => ({ k_series: k, qty: q, unit_price: up(k), type: "extra" })),
         ]
       : Object.entries(customK).map(([k, q]) => ({ k_series: k, qty: q, unit_price: up(k), type: "custom" }));
 
-    const productLabel = product === "starter"
-      ? `Starter Box ×${starterQty}${Object.keys(extraK).length ? ` + Extra: ${Object.keys(extraK).join(", ")}` : ""}`
+    const productLabel = (product === "starter" || product === "full")
+      ? `${boxName} ×${starterQty}${Object.keys(extraK).length ? ` + Extra: ${Object.keys(extraK).join(", ")}` : ""}`
       : Object.entries(customK).map(([k, q]) => `${k} × ${q}`).join(", ");
 
     const { error } = await supabase.from("orders").insert([{
@@ -319,8 +319,8 @@ Admin: saidamagicbox.com/admin`;
       email, phone, city, country,
       vat_number: vatNum || null,
       message: message || null,
-      k_series: productLabel,
-      quantity: product === "starter" ? starterQty : Object.values(customK).reduce((a, b) => a + b, 0),
+        k_series: productLabel,
+        quantity: (product === "starter" || product === "full") ? starterQty : Object.values(customK).reduce((a, b) => a + b, 0),
       product_type: product,
       items,
       vat_applied:  isAT,
