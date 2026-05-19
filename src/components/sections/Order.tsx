@@ -25,6 +25,7 @@ const K_ALL  = [
 ];
 
 const STARTER_NET  = 399.90;
+const FULL_NET     = 449.90;
 const K_PRICE      = 7.50;
 const K_PLUS_PRICE = 9.90;
 const VAT_RATE     = 0.20;
@@ -184,7 +185,7 @@ const Order = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const [isAT, setIsAT]             = useState(true);
-  const [product, setProduct]       = useState<"starter" | "custom">("starter");
+  const [product, setProduct]       = useState<"starter" | "full" | "custom">("starter");
   const [starterQty, setStarterQty] = useState(1);
   const [showExtra, setShowExtra]   = useState(false);
   const [extraK, setExtraK]         = useState<KSel>({});
@@ -202,11 +203,17 @@ const Order = () => {
   const [message, setMessage]         = useState("");
   const vatTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const starterNet    = STARTER_NET * starterQty;
+  const boxIsStarter  = product === "starter";
+  const boxIsFull     = product === "full";
+  const boxUnit       = boxIsFull ? FULL_NET : STARTER_NET;
+  const boxName       = boxIsFull ? "Full Box" : "Starter Box";
+  const boxDrawers    = boxIsFull ? 66 : 61;
+  const boxGlasses    = boxIsFull ? 330 : 305;
+  const starterNet    = boxUnit * starterQty;
   const extraNet      = Object.entries(extraK).reduce((a, [k, q]) => a + up(k) * q, 0);
   const starterTotNet = starterNet + extraNet;
   const customNet     = Object.entries(customK).reduce((a, [k, q]) => a + up(k) * q, 0);
-  const activeNet     = product === "starter" ? starterTotNet : customNet;
+  const activeNet     = (boxIsStarter || boxIsFull) ? starterTotNet : customNet;
   const vat           = isAT ? activeNet * VAT_RATE : 0;
   const grand         = activeNet + vat;
 
@@ -237,7 +244,7 @@ const Order = () => {
     if (v.trim().length > 4) vatTimer.current = setTimeout(() => checkVat(v.trim()), 900);
   };
 
-  const canContinueStep0 = product === "starter" || (product === "custom" && Object.keys(customK).length > 0);
+  const canContinueStep0 = product === "starter" || product === "full" || (product === "custom" && Object.keys(customK).length > 0);
   const contactValid = contactSchema.safeParse({
     shop_name: shopName, contact_name: contactName, email, phone, city, country,
     vat_number: vatNum || undefined, message: message || undefined,
@@ -296,15 +303,15 @@ Admin: saidamagicbox.com/admin`;
     }
     setLoading(true);
 
-    const items = product === "starter"
+    const items = (product === "starter" || product === "full")
       ? [
-          { type: "starter_box", qty: starterQty, unit_price: STARTER_NET },
+          { type: product === "full" ? "full_box" : "starter_box", qty: starterQty, unit_price: boxUnit },
           ...Object.entries(extraK).map(([k, q]) => ({ k_series: k, qty: q, unit_price: up(k), type: "extra" })),
         ]
       : Object.entries(customK).map(([k, q]) => ({ k_series: k, qty: q, unit_price: up(k), type: "custom" }));
 
-    const productLabel = product === "starter"
-      ? `Starter Box ×${starterQty}${Object.keys(extraK).length ? ` + Extra: ${Object.keys(extraK).join(", ")}` : ""}`
+    const productLabel = (product === "starter" || product === "full")
+      ? `${boxName} ×${starterQty}${Object.keys(extraK).length ? ` + Extra: ${Object.keys(extraK).join(", ")}` : ""}`
       : Object.entries(customK).map(([k, q]) => `${k} × ${q}`).join(", ");
 
     const { error } = await supabase.from("orders").insert([{
@@ -312,8 +319,8 @@ Admin: saidamagicbox.com/admin`;
       email, phone, city, country,
       vat_number: vatNum || null,
       message: message || null,
-      k_series: productLabel,
-      quantity: product === "starter" ? starterQty : Object.values(customK).reduce((a, b) => a + b, 0),
+        k_series: productLabel,
+        quantity: (product === "starter" || product === "full") ? starterQty : Object.values(customK).reduce((a, b) => a + b, 0),
       product_type: product,
       items,
       vat_applied:  isAT,
@@ -505,29 +512,45 @@ Admin: saidamagicbox.com/admin`;
 
               <Card label={de ? "Produkt auswählen" : "Select Product"}>
                 <div className="space-y-3">
-                  <motion.div whileHover={{ y: -2 }} onClick={() => setProduct("starter")}
-                    className={`flex gap-4 p-5 rounded-2xl border cursor-pointer transition-all ${product === "starter" ? "border-primary-glow/60 bg-primary-glow/10" : "border-white/10 hover:border-white/20 bg-white/[0.02]"}`}>
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-primary-glow grid place-items-center flex-shrink-0 shadow-glow">
-                      <Package className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-semibold text-white">Starter Box</p>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary-glow/15 text-primary-glow font-semibold">{de ? "Empfohlen" : "Recommended"}</span>
-                      </div>
-                      <p className="text-xs text-white/60 mt-1">66 {de ? "Schubladen" : "drawers"} · 330 {de ? "Gläser" : "glasses"} · QR-System</p>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="font-display text-lg font-bold text-white">{fmt(STARTER_NET)}</p>
-                      <p className="text-[10px] text-white/50">{isAT ? (de ? "zzgl. MwSt." : "+ VAT") : (de ? "ohne MwSt." : "no VAT")}</p>
-                    </div>
-                  </motion.div>
+                  {[
+                    { id: "starter" as const, name: "Starter Box", drawers: 61, glasses: 305, price: STARTER_NET, recommended: true },
+                    { id: "full" as const,    name: "Full Box",    drawers: 66, glasses: 330, price: FULL_NET,    recommended: false },
+                  ].map((opt) => {
+                    const active = product === opt.id;
+                    return (
+                      <motion.div key={opt.id} whileHover={{ y: -2 }} onClick={() => setProduct(opt.id)}
+                        className={`flex items-center gap-4 p-5 rounded-2xl border cursor-pointer transition-all ${active ? "border-primary-glow/60 bg-primary-glow/10 shadow-[0_0_0_1px_hsl(var(--primary-glow)/0.3)]" : "border-white/10 hover:border-white/20 bg-white/[0.02]"}`}>
+                        <span className={`w-5 h-5 rounded-full border-2 grid place-items-center flex-shrink-0 transition-colors ${active ? "border-primary-glow" : "border-white/30"}`}>
+                          {active && <span className="w-2.5 h-2.5 rounded-full bg-primary-glow" />}
+                        </span>
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-primary-glow grid place-items-center flex-shrink-0 shadow-glow">
+                          <Package className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <p className="font-semibold text-white">{opt.name}</p>
+                            {opt.recommended && (
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary-glow/15 text-primary-glow font-semibold">{de ? "Empfohlen" : "Recommended"}</span>
+                            )}
+                          </div>
+                          <p className="text-xs text-white/60 mt-1">{opt.drawers} {de ? "Schubladen" : "drawers"} · {opt.glasses} {de ? "Gläser" : "glasses"} · QR-System</p>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <p className="font-display text-lg font-bold text-white">{fmt(opt.price)}</p>
+                          <p className="text-[10px] text-white/50">{isAT ? (de ? "zzgl. MwSt." : "+ VAT") : (de ? "ohne MwSt." : "no VAT")}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                   <motion.div whileHover={{ y: -2 }} onClick={() => setProduct("custom")}
                     className={`flex gap-4 p-5 rounded-2xl border cursor-pointer transition-all ${product === "custom" ? "border-primary-glow/60 bg-primary-glow/10" : "border-white/10 hover:border-white/20 bg-white/[0.02]"}`}>
+                    <span className={`w-5 h-5 rounded-full border-2 grid place-items-center flex-shrink-0 transition-colors ${product === "custom" ? "border-primary-glow" : "border-white/30"}`}>
+                      {product === "custom" && <span className="w-2.5 h-2.5 rounded-full bg-primary-glow" />}
+                    </span>
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 grid place-items-center flex-shrink-0">
                       <Settings className="w-5 h-5 text-white/70" />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <p className="font-semibold text-white">{de ? "Individuelle Bestellung" : "Custom Order"}</p>
                       <p className="text-xs text-white/60 mt-1">K-Serie {fmt(K_PRICE)} · K+-Serie {fmt(K_PLUS_PRICE)}</p>
                     </div>
@@ -536,14 +559,14 @@ Admin: saidamagicbox.com/admin`;
               </Card>
 
               <AnimatePresence mode="wait">
-                {product === "starter" && (
-                  <motion.div key="starter-cfg" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
-                    <Card label={de ? "Anzahl Starter Boxes" : "Number of Starter Boxes"}>
+                {(product === "starter" || product === "full") && (
+                  <motion.div key="box-cfg" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4 }}>
+                    <Card label={de ? `Anzahl ${boxName}` : `Number of ${boxName}`}>
                       <div className="flex items-center gap-5">
                         <button type="button" onClick={() => setStarterQty(q => Math.max(1, q - 1))} className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 grid place-items-center hover:bg-white/10 transition"><Minus className="w-4 h-4" /></button>
                         <span className="font-display text-4xl font-bold w-14 text-center text-white tabular-nums">{starterQty}</span>
                         <button type="button" onClick={() => setStarterQty(q => Math.min(99, q + 1))} className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 grid place-items-center hover:bg-white/10 transition"><Plus className="w-4 h-4" /></button>
-                        <span className="text-sm text-white/60">= {starterQty * 66} {de ? "Schubladen" : "drawers"}, {starterQty * 330} {de ? "Gläser" : "glasses"}</span>
+                        <span className="text-sm text-white/60">= {starterQty * boxDrawers} {de ? "Schubladen" : "drawers"}, {starterQty * boxGlasses} {de ? "Gläser" : "glasses"}</span>
                       </div>
                       <button type="button" onClick={() => setShowExtra(v => !v)}
                         className="mt-5 flex items-center gap-2 text-sm font-semibold text-primary-glow hover:opacity-80 transition">
@@ -562,7 +585,7 @@ Admin: saidamagicbox.com/admin`;
                       </AnimatePresence>
                       <SummaryBox
                         rows={[
-                          { label: `Starter Box × ${starterQty}`, value: fmt(starterNet) },
+                          { label: `${boxName} × ${starterQty}`, value: fmt(starterNet) },
                           ...(extraNet > 0 ? [{ label: de ? "Extra K-Serien" : "Extra K-Series", value: fmt(extraNet) }] : []),
                         ]}
                         vatRow={isAT ? { label: de ? "MwSt. 20%" : "VAT 20%", value: fmt(vat) } : undefined}
