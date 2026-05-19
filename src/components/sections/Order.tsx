@@ -25,6 +25,7 @@ const K_ALL  = [
 ];
 
 const STARTER_NET  = 399.90;
+const FULL_NET     = 449.90;
 const K_PRICE      = 7.50;
 const K_PLUS_PRICE = 9.90;
 const VAT_RATE     = 0.20;
