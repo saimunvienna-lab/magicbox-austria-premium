@@ -25,7 +25,7 @@ const K_ALL  = [
 ];
 
 const STARTER_NET  = 399.90;
-const K_PRICE      = 6.25;
+const K_PRICE      = 7.50;
 const K_PLUS_PRICE = 9.90;
 const VAT_RATE     = 0.20;
 const FORMSPREE    = "https://formspree.io/f/mzdokerz";
@@ -515,7 +515,7 @@ Admin: saidamagicbox.com/admin`;
                         <p className="font-semibold text-white">Starter Box</p>
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary-glow/15 text-primary-glow font-semibold">{de ? "Empfohlen" : "Recommended"}</span>
                       </div>
-                      <p className="text-xs text-white/60 mt-1">61 {de ? "Schubladen" : "drawers"} · 305 {de ? "Gläser" : "glasses"} · QR-System</p>
+                      <p className="text-xs text-white/60 mt-1">66 {de ? "Schubladen" : "drawers"} · 330 {de ? "Gläser" : "glasses"} · QR-System</p>
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="font-display text-lg font-bold text-white">{fmt(STARTER_NET)}</p>
@@ -543,7 +543,7 @@ Admin: saidamagicbox.com/admin`;
                         <button type="button" onClick={() => setStarterQty(q => Math.max(1, q - 1))} className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 grid place-items-center hover:bg-white/10 transition"><Minus className="w-4 h-4" /></button>
                         <span className="font-display text-4xl font-bold w-14 text-center text-white tabular-nums">{starterQty}</span>
                         <button type="button" onClick={() => setStarterQty(q => Math.min(99, q + 1))} className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 grid place-items-center hover:bg-white/10 transition"><Plus className="w-4 h-4" /></button>
-                        <span className="text-sm text-white/60">= {starterQty * 61} {de ? "Schubladen" : "drawers"}, {starterQty * 305} {de ? "Gläser" : "glasses"}</span>
+                        <span className="text-sm text-white/60">= {starterQty * 66} {de ? "Schubladen" : "drawers"}, {starterQty * 330} {de ? "Gläser" : "glasses"}</span>
                       </div>
                       <button type="button" onClick={() => setShowExtra(v => !v)}
                         className="mt-5 flex items-center gap-2 text-sm font-semibold text-primary-glow hover:opacity-80 transition">

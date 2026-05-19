@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Star, ArrowRight } from "lucide-react";
+import { Star } from "lucide-react";
 
 type Row = { label: string; magic: string; plotter: string; classic: string };
 
 const rows: Row[] = [
-  { label: "Einmal-Investition", magic: "ab €540", plotter: "€1.200 – €3.000", classic: "€2.000+" },
-  { label: "Material pro Schutzfolie", magic: "€1,70", plotter: "€0,80 (Folie/TPU)", classic: "€2 – €4" },
+  { label: "Einmal-Investition", magic: "ab €480", plotter: "€1.200 – €3.000", classic: "€2.000+" },
+  { label: "Material pro Schutzfolie", magic: "€1,50 bis €1,98", plotter: "€0,80 (Folie/TPU)", classic: "€2 – €4" },
   { label: "Modelle abgedeckt", magic: "2.000+ ✅", plotter: "5.000+ (nur Folie) ⚠️", classic: "~30 ❌" },
   { label: "Glasqualität", magic: "9H Panzerglas ✅", plotter: "❌ Nur Folie (TPU/Hydrogel)", classic: "9H Panzerglas ✅" },
   { label: "Curved-Display Support", magic: "✅ Mit 0,25mm Ultra-Dünn", plotter: "⚠️ Begrenzt", classic: "✅" },
@@ -89,25 +89,6 @@ const Comparison = () => {
             </table>
           </div>
           <div className="lg:hidden absolute top-0 right-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none rounded-r-3xl" />
-        </div>
-
-        <p className="mt-4 text-xs text-muted-foreground italic">
-          *Vergleichswerte basieren auf branchenüblichen Durchschnittswerten und SAIDA-Praxiserfahrung aus 14 Jahren Mobilfunk-Handel. Tatsächliche Werte können je nach Shop variieren.
-        </p>
-
-        <div className="mt-12 rounded-3xl bg-gradient-to-r from-primary to-primary-glow text-primary-foreground p-8 sm:p-10 text-center">
-          <h3 className="font-display text-2xl sm:text-3xl font-bold">
-            Möchten Sie eine ROI-Berechnung für Ihren Shop?
-          </h3>
-          <p className="mt-3 text-primary-foreground/85 max-w-2xl mx-auto">
-            Senden Sie uns Ihren durchschnittlichen Schutzfolien-Umsatz und wir zeigen Ihnen, wie schnell sich MagicBox amortisiert.
-          </p>
-          <a
-            href="#bestellung"
-            className="mt-6 inline-flex items-center gap-2 bg-background text-foreground px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform"
-          >
-            Unverbindliche Anfrage stellen <ArrowRight className="size-4" />
-          </a>
         </div>
       </div>
     </section>

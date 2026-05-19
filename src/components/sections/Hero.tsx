@@ -177,8 +177,8 @@ const Hero = () => {
               {[
                 { v: 2000, s: "+", l: t("hero_stat1_l") },
                 { v: 48, s: "+", l: t("hero_stat2_l") },
-                { v: 305, s: "", l: t("hero_stat3_l") },
-                { v: 1, s: " m²", l: t("hero_stat4_l") },
+                { v: 330, s: "", l: t("hero_stat3_l") },
+                { v: 0.5, s: " m²", l: t("hero_stat4_l") },
               ].map((stat, i) => (
                 <div key={i} className="sm:px-5 first:sm:pl-0 text-center sm:text-left">
                   <div className="font-display text-3xl sm:text-4xl font-bold text-gradient leading-none">
@@ -328,7 +328,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={reduced ? { opacity: 1 } : { opacity: 1, y: [0, -6, 0] }}
               transition={{ opacity: { duration: 0.6, delay: 1.1 }, y: { repeat: Infinity, duration: 7, ease: "easeInOut", delay: 1 } }}
-              className="absolute -bottom-4 right-2 sm:right-6 rounded-2xl p-[1px] bg-gradient-to-br from-primary via-primary-glow to-accent shadow-elevated"
+              className="absolute -bottom-10 right-2 sm:right-6 rounded-2xl p-[1px] bg-gradient-to-br from-primary via-primary-glow to-accent shadow-elevated"
             >
               <div className="rounded-[calc(1rem-1px)] bg-card/95 backdrop-blur-xl px-4 py-3 flex items-center gap-2.5">
                 <Package className="size-4 text-primary" />
