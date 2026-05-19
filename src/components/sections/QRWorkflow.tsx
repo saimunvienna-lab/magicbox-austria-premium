@@ -39,7 +39,17 @@ const QRWorkflow = () => {
   const [query, setQuery]           = useState("");
   const [brand, setBrand]           = useState("");
   const [selected, setSelected]     = useState<Model | null>(null);
+  const [DB, setDB]                 = useState<Model[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    fetch("/phone-models.json")
+      .then((r) => r.json())
+      .then((rows: Array<{ brand: string; model: string; k_series: string }>) => {
+        setDB(rows.map((r) => ({ b: r.brand, m: r.model, k: r.k_series })));
+      })
+      .catch(() => setDB([]));
+  }, []);
 
   useEffect(() => {
     if (paused) return;
